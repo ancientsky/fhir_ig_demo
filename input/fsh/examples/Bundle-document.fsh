@@ -7,7 +7,7 @@
 
 Instance: docref-dengue-discharge
 InstanceOf: DocumentReferenceNIDRS
-Usage: #example
+Usage: #inline
 Title: "通報單病歷資料-登革熱出院病摘"
 Description: "病歷資料傳送範例：檔案類別 1 出院病摘、檔案類型 pdf(以 base64 編碼)，並以通報單號參照通報單。"
 * status = #current
@@ -35,7 +35,7 @@ Description: "病歷資料傳送範例：檔案類別 1 出院病摘、檔案類
 
 Instance: mh-document
 InstanceOf: MessageHeaderNIDRSDocument
-Usage: #example
+Usage: #inline
 Title: "通報單病歷資料傳送訊息表頭"
 Description: "通報單病歷資料傳送作業(EMRMsg03)之訊息表頭範例。"
 * eventCoding = CDCMessageEvent#EMRMsg03 "通報單病歷檔案上傳"

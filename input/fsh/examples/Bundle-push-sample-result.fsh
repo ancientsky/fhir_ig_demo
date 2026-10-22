@@ -7,7 +7,7 @@
 
 Instance: obs-dengue-igm
 InstanceOf: ObservationNIDRSAntibodyResult
-Usage: #example
+Usage: #inline
 Title: "血清學檢驗結果-登革病毒IgM抗體"
 Description: "血清學檢驗結果(SampleAntibodyResult)範例：登革病毒 IgM 抗體 ELISA 陽性，效價 1:320，未四倍上升。"
 * identifier[0].system = "https://lims.cdc.gov.tw/antibody-seq"
@@ -31,7 +31,7 @@ Description: "血清學檢驗結果(SampleAntibodyResult)範例：登革病毒 I
 
 Instance: obs-dengue-pcr
 InstanceOf: ObservationNIDRSPathogenResult
-Usage: #example
+Usage: #inline
 Title: "病原體檢驗結果-登革病毒real-time PCR"
 Description: "病原體檢驗結果(SamplePathogenResult)範例：螢光定量聚合酶連鎖反應(real-time PCR)檢出登革病毒，次分型 DENV-2。"
 * identifier[0].system = "https://lims.cdc.gov.tw/pathogen-seq"
@@ -50,7 +50,7 @@ Description: "病原體檢驗結果(SamplePathogenResult)範例：螢光定量�
 
 Instance: dr-dengue-sample-result
 InstanceOf: DiagnosticReportNIDRSSampleResult
-Usage: #example
+Usage: #inline
 Title: "送驗單綜合檢驗結果-登革熱陽性"
 Description: "檢驗結果主動通知範例：送驗單 115011400000123、通報單 1150123456789，送驗疾病 061 登革熱，綜合檢驗結果 2 陽性。"
 * extension[report].valueReference.type = "Condition"
@@ -80,7 +80,7 @@ Description: "檢驗結果主動通知範例：送驗單 115011400000123、通�
 
 Instance: mh-push-sample-result
 InstanceOf: MessageHeaderNIDRSPushSampleResult
-Usage: #example
+Usage: #inline
 Title: "檢驗結果主動通知訊息表頭"
 Description: "檢驗結果主動通知(PushSampleResult)之訊息表頭範例。"
 * eventCoding = CDCMessageEvent#PushSampleResult "檢驗結果主動通知"

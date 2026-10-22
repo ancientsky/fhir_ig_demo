@@ -5,7 +5,7 @@
 
 Instance: condition-dengue-caseref
 InstanceOf: ConditionNIDRSCaseRef
-Usage: #example
+Usage: #inline
 Title: "通報單清單-登革熱通報單 1150123456789"
 Description: "通報成功回覆之通報單清單(REPORT_LIST)範例：通報單號(REPORT_ID)、通報疾病(DISEASE_ID)及個案證號(IDNO)。"
 * insert ExReportIdIdentifier(1150123456789)
@@ -19,7 +19,7 @@ Description: "通報成功回覆之通報單清單(REPORT_LIST)範例：通報�
 
 Instance: mh-response-report-success
 InstanceOf: MessageHeaderNIDRSResponse
-Usage: #example
+Usage: #inline
 Title: "通報單新增結果訊息表頭-成功"
 Description: "通報單新增結果(HISMsg01)成功之訊息表頭範例：response.identifier 為範例1請求訊息之 MessageHeader.id，處理狀態 ok(SUCCESS)。"
 * eventCoding = CDCMessageEvent#HISMsg01 "通報單新增結果"

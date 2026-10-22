@@ -6,7 +6,7 @@
 
 Instance: patient-tb
 InstanceOf: PatientNIDRSTBSample
-Usage: #example
+Usage: #inline
 Title: "TB送驗個案-李建國"
 Description: "法傳TB送驗單個案範例：身分證字號、健保卡序號、病歷號碼、國籍及居住地址(含縣市、鄉鎮市區代碼)。"
 * insert ExIdCardNumber(A112580327)
@@ -34,7 +34,7 @@ Description: "法傳TB送驗單個案範例：身分證字號、健保卡序號�
 
 Instance: specimen-tb
 InstanceOf: SpecimenNIDRSTB
-Usage: #example
+Usage: #inline
 Title: "TB送驗檢體-痰"
 Description: "法傳TB送驗單檢體範例：結核病檢體類別 14 痰，採檢日 2026-03-09。"
 * identifier[0].system = "https://www.mmh.org.tw/specimen-no"
@@ -46,7 +46,7 @@ Description: "法傳TB送驗單檢體範例：結核病檢體類別 14 痰，採
 
 Instance: sr-tb-sample
 InstanceOf: ServiceRequestNIDRSTBSample
-Usage: #example
+Usage: #inline
 Title: "法傳TB送驗單"
 Description: "法傳TB送驗單(TB_SAMPLE)範例：送驗項目 0 抹片、1 培養，抗結核菌藥物 N 未用藥物，送驗日 2026-03-10，指定收件單位為疾管署(類型 1)。"
 * extension[tbMedicineUse].valueCodeableConcept = CDCTBMedicineUse#N "未用藥物"
@@ -70,7 +70,7 @@ Description: "法傳TB送驗單(TB_SAMPLE)範例：送驗項目 0 抹片、1 培
 
 Instance: mh-sample-tb
 InstanceOf: MessageHeaderNIDRSSample
-Usage: #example
+Usage: #inline
 Title: "通報單送驗新增訊息表頭-法傳TB送驗單"
 Description: "通報單送驗新增作業(EMRMsg04)之訊息表頭範例(法傳TB送驗單)。"
 * eventCoding = CDCMessageEvent#EMRMsg04 "通報單送驗"

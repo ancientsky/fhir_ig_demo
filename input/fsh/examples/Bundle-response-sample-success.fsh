@@ -7,7 +7,7 @@
 
 Instance: specimen-dengue-created
 InstanceOf: SpecimenNIDRS
-Usage: #example
+Usage: #inline
 Title: "送驗檢體-登革熱血清(送驗新增結果)"
 Description: "送驗新增成功回覆之檢體範例：檢體類別 0 血清、採檢日、院內檢體編號，個案以身分證統一編號參照。"
 * identifier[0].system = "https://www.ntuh.gov.tw/specimen-no"
@@ -22,7 +22,7 @@ Description: "送驗新增成功回覆之檢體範例：檢體類別 0 血清、
 
 Instance: sr-dengue-sample-created
 InstanceOf: ServiceRequestNIDRSSample
-Usage: #example
+Usage: #inline
 Title: "法傳送驗單-登革熱(送驗新增結果)"
 Description: "送驗新增成功回覆之送驗單範例：系統自動編號之送驗單編號(BarCode 115011400000123)、送驗單建立日(CREATE_DAY)。"
 * identifier[barcode].type = CDCIdentifierType#lims-barcode "送驗單編號"
@@ -50,7 +50,7 @@ Description: "送驗新增成功回覆之送驗單範例：系統自動編號之
 
 Instance: mh-response-sample-success
 InstanceOf: MessageHeaderNIDRSResponse
-Usage: #example
+Usage: #inline
 Title: "通報單送驗新增結果訊息表頭-成功"
 Description: "通報單送驗新增結果(HISMsg04)成功之訊息表頭範例：response.identifier 為範例5請求訊息之 MessageHeader.id。"
 * eventCoding = CDCMessageEvent#HISMsg04 "通報單送驗新增結果"

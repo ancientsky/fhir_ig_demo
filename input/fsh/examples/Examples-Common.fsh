@@ -29,7 +29,7 @@ RuleSet: ExReportIdIdentifier(value)
 
 Instance: org-ntuh
 InstanceOf: OrganizationNIDRSHospital
-Usage: #example
+Usage: #inline
 Title: "通報單位-國立臺灣大學醫學院附設醫院"
 Description: "通報單位(HOSPITAL)及送驗單位(SAMPLING_HOSPITAL)範例：國立臺灣大學醫學院附設醫院，醫事機構代碼 0401180014。"
 * insert ExHospitalCode(0401180014)
@@ -50,7 +50,7 @@ Description: "通報單位(HOSPITAL)及送驗單位(SAMPLING_HOSPITAL)範例：�
 
 Instance: org-ncku
 InstanceOf: OrganizationNIDRSHospital
-Usage: #example
+Usage: #inline
 Title: "通報單位-國立成功大學醫學院附設醫院"
 Description: "登革熱大量通報範例之通報單位：國立成功大學醫學院附設醫院，醫事機構代碼 0421040011。"
 * insert ExHospitalCode(0421040011)
@@ -68,7 +68,7 @@ Description: "登革熱大量通報範例之通報單位：國立成功大學醫
 
 Instance: org-mmh
 InstanceOf: OrganizationNIDRSHospital
-Usage: #example
+Usage: #inline
 Title: "送驗單位-馬偕紀念醫院"
 Description: "法傳TB送驗單範例之送驗單位(SAMPLING_HOSPITAL)：馬偕紀念醫院，醫事機構代碼 1101100011。"
 * insert ExHospitalCode(1101100011)
@@ -91,7 +91,7 @@ Description: "法傳TB送驗單範例之送驗單位(SAMPLING_HOSPITAL)：馬偕
 
 Instance: org-cdc-lab-22
 InstanceOf: OrganizationNIDRSLab
-Usage: #example
+Usage: #inline
 Title: "指定收件單位-疾管署檢體單一窗口"
 Description: "送驗單指定收件單位範例：指定收件單位類型 1(疾管署)，指定收件單位代碼 22(檢體單一窗口)。"
 * type = CDCReceivedUnitType#1 "疾管署"
@@ -104,7 +104,7 @@ Description: "送驗單指定收件單位範例：指定收件單位類型 1(疾
 
 Instance: prac-ntuh-reporter
 InstanceOf: PractitionerNIDRS
-Usage: #example
+Usage: #inline
 Title: "通報單登錄者-林怡君"
 Description: "通報單登錄者(REPORTER_NAME)及送驗人員(REQUESTER)範例：臺大醫院感染管制中心護理師林怡君(虛構人物)。"
 * active = true
@@ -116,7 +116,7 @@ Description: "通報單登錄者(REPORTER_NAME)及送驗人員(REQUESTER)範例�
 
 Instance: prac-ntuh-doctor
 InstanceOf: PractitionerNIDRS
-Usage: #example
+Usage: #inline
 Title: "診斷醫師-王志明"
 Description: "診斷醫師(DIAGNOSTICIAN)範例：臺大醫院感染科主治醫師王志明(虛構人物)。"
 * active = true
@@ -125,7 +125,7 @@ Description: "診斷醫師(DIAGNOSTICIAN)範例：臺大醫院感染科主治醫
 
 Instance: role-ntuh-reporter
 InstanceOf: PractitionerRoleNIDRSReporter
-Usage: #example
+Usage: #inline
 Title: "通報者角色-林怡君(臺大醫院)"
 Description: "通報單登錄者林怡君所屬通報單位(臺大醫院)及通報者聯絡電話(HOSPITAL_CONTACT)；亦作為送驗單之送驗人員與送驗單位。"
 * active = true
@@ -139,7 +139,7 @@ Description: "通報單登錄者林怡君所屬通報單位(臺大醫院)及通�
 
 Instance: prac-ncku-reporter
 InstanceOf: PractitionerNIDRS
-Usage: #example
+Usage: #inline
 Title: "通報單登錄者-陳淑芬"
 Description: "登革熱大量通報範例之通報單登錄者：成大醫院感染管制中心護理師陳淑芬(虛構人物)。"
 * active = true
@@ -148,7 +148,7 @@ Description: "登革熱大量通報範例之通報單登錄者：成大醫院感
 
 Instance: prac-ncku-doctor
 InstanceOf: PractitionerNIDRS
-Usage: #example
+Usage: #inline
 Title: "診斷醫師-黃俊傑"
 Description: "登革熱大量通報範例之診斷醫師：成大醫院急診部主治醫師黃俊傑(虛構人物)。"
 * active = true
@@ -157,7 +157,7 @@ Description: "登革熱大量通報範例之診斷醫師：成大醫院急診部
 
 Instance: role-ncku-reporter
 InstanceOf: PractitionerRoleNIDRSReporter
-Usage: #example
+Usage: #inline
 Title: "通報者角色-陳淑芬(成大醫院)"
 Description: "登革熱大量通報範例之通報者角色：陳淑芬所屬通報單位(成大醫院)及通報者聯絡電話。"
 * active = true
@@ -171,7 +171,7 @@ Description: "登革熱大量通報範例之通報者角色：陳淑芬所屬通
 
 Instance: prac-mmh-requester
 InstanceOf: PractitionerNIDRS
-Usage: #example
+Usage: #inline
 Title: "送驗人員-吳佩珊"
 Description: "法傳TB送驗單範例之送驗人員(REQUESTER)：馬偕紀念醫院檢驗科醫檢師吳佩珊(虛構人物)。"
 * active = true
@@ -180,7 +180,7 @@ Description: "法傳TB送驗單範例之送驗人員(REQUESTER)：馬偕紀念�
 
 Instance: role-mmh-requester
 InstanceOf: PractitionerRoleNIDRS
-Usage: #example
+Usage: #inline
 Title: "送驗人員角色-吳佩珊(馬偕紀念醫院)"
 Description: "法傳TB送驗單範例之送驗人員吳佩珊及其送驗單位(馬偕紀念醫院)。"
 * active = true

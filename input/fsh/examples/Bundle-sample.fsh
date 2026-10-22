@@ -7,7 +7,7 @@
 
 Instance: specimen-dengue
 InstanceOf: SpecimenNIDRS
-Usage: #example
+Usage: #inline
 Title: "送驗檢體-登革熱血清"
 Description: "法傳送驗單檢體範例：檢體類別 0 血清(符合送驗疾病 061 登革熱之檢體類別)、非屍體解剖、院內檢體編號。"
 * identifier[0].system = "https://www.ntuh.gov.tw/specimen-no"
@@ -21,7 +21,7 @@ Description: "法傳送驗單檢體範例：檢體類別 0 血清(符合送驗�
 
 Instance: sr-dengue-sample
 InstanceOf: ServiceRequestNIDRSSample
-Usage: #example
+Usage: #inline
 Title: "法傳送驗單-登革熱"
 Description: "法傳送驗單(SAMPLE)範例：送驗疾病 061 登革熱，以通報單號參照通報單，送驗人員為臺大醫院林怡君，指定收件單位為疾管署(類型 1)檢體單一窗口(22)。"
 * extension[drugBeforeSampling].valueBoolean = false
@@ -43,7 +43,7 @@ Description: "法傳送驗單(SAMPLE)範例：送驗疾病 061 登革熱，以�
 
 Instance: mh-sample-dengue
 InstanceOf: MessageHeaderNIDRSSample
-Usage: #example
+Usage: #inline
 Title: "通報單送驗新增訊息表頭-登革熱"
 Description: "通報單送驗新增作業(EMRMsg04)之訊息表頭範例(法傳送驗單)。"
 * eventCoding = CDCMessageEvent#EMRMsg04 "通報單送驗"

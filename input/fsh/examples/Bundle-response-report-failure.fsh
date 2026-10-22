@@ -5,7 +5,7 @@
 
 Instance: oo-report-failure
 InstanceOf: OperationOutcomeNIDRS
-Usage: #example
+Usage: #inline
 Title: "錯誤清單-個案證號未填寫"
 Description: "通報單新增失敗之錯誤清單(ERROR_LIST)範例：錯誤代碼 IDA3020002(通報單-個案資料：患者「身份證字號/護照號碼」必填寫)。"
 * issue[0].severity = #error
@@ -16,7 +16,7 @@ Description: "通報單新增失敗之錯誤清單(ERROR_LIST)範例：錯誤代
 
 Instance: mh-response-report-failure
 InstanceOf: MessageHeaderNIDRSResponse
-Usage: #example
+Usage: #inline
 Title: "通報單新增結果訊息表頭-失敗"
 Description: "通報單新增結果(HISMsg01)失敗之訊息表頭範例：處理狀態 fatal-error(FAILURE)，錯誤清單見 response.details。"
 * eventCoding = CDCMessageEvent#HISMsg01 "通報單新增結果"

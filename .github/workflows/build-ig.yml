@@ -65,15 +65,6 @@ jobs:
       - name: Run IG Publisher
         run: java -Xmx6g -Dfile.encoding=UTF-8 -jar input-cache/publisher.jar -ig . -no-sushi
 
-      - name: Show QA summary
-        if: always()
-        run: |
-          if [ -f output/qa.txt ]; then
-            head -n 40 output/qa.txt
-            echo "---- terminology (SNOMED CT / LOINC) issues ----"
-            grep -n -i -E 'snomed|loinc' output/qa.txt | grep -i -E 'error|unknown|not found|wrong display|invalid' | head -n 100 || true
-          fi
-
       - name: Upload QA report
         if: always()
         uses: actions/upload-artifact@v4
@@ -97,6 +88,15 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: output
+
+      - name: Show QA summary
+        if: always()
+        run: |
+          if [ -f output/qa.txt ]; then
+            head -n 40 output/qa.txt
+            echo "---- terminology (SNOMED CT / LOINC) issues ----"
+            grep -n -i -E 'snomed|loinc' output/qa.txt | grep -i -E 'error|unknown|not found|wrong display|invalid' | head -n 100 || true
+          fi
 
   deploy:
     needs: build

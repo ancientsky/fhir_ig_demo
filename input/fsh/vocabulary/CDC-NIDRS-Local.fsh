@@ -270,6 +270,7 @@ Description: "本 IG 使用之識別碼類型(補充 HL7 v2-0203 未涵蓋者)�
 * ^version = "0.1.0"
 * #nidrs-report "NIDRS通報單號" "疾管署傳染病通報系統之通報單號(13碼)。"
 * #nidrs-temp "NIDRS系統自動編碼證號" "無法取得身分證統一編號、居留證統一證號或護照號碼時，填入 AA(本國新生兒，報告日期-出生日期<6個月)、BB(本國人士)或 CC(外國人士)，由 NIDRS 自動編碼流水證號(例：AA11300001)。"
+* #foreign-passport "外國護照號碼" "外國人士之護照號碼(IDNO)；識別碼 system 為 http://hl7.org/fhir/sid/passport-{ISO 3166-1 alpha-3}。"
 * #lims-barcode "送驗單編號" "疾管署所發放之送驗單 bar-code(XX-XXX-XXXXXX 共 13 碼)或系統自動編號(15 碼數字)。"
 
 CodeSystem: CDCNIDRSObservation

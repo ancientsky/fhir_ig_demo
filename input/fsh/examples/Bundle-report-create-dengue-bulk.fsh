@@ -69,6 +69,7 @@ InstanceOf: ConditionNIDRSDengueBulk
 Usage: #example
 Title: "通報疾病-登革熱大量通報(1)"
 Description: "登革熱大量通報之通報疾病範例(1)：未填寫有無症狀，僅填寫主要症狀與發病日。"
+* extension[noOnsetDate].valueBoolean = false
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis
@@ -87,6 +88,7 @@ InstanceOf: ConditionNIDRSDengueBulk
 Usage: #example
 Title: "通報疾病-登革熱大量通報(2)"
 Description: "登革熱大量通報之通報疾病範例(2)：未填寫有無症狀與主要症狀，僅填寫發病日。"
+* extension[noOnsetDate].valueBoolean = false
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis

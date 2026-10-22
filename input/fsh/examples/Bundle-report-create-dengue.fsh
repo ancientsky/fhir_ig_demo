@@ -52,6 +52,7 @@ Usage: #example
 Title: "通報疾病-登革熱(新增)"
 Description: "通報疾病範例：登革熱(061)，發病日 2026-01-10、診斷日 2026-01-14，有症狀(發燒、頭痛、後眼窩痛、肌肉痛、皮疹)。"
 * extension[hasSymptom].valueBoolean = true
+* extension[noOnsetDate].valueBoolean = false
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis

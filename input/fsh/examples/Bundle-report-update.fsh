@@ -12,6 +12,7 @@ Title: "通報疾病-登革熱(修改)"
 Description: "修改通報單時之通報疾病範例：帶入原通報單號(REPORT_ID 1150123456789)，通報疾病維持登革熱(061)。"
 * insert ExReportIdIdentifier(1150123456789)
 * extension[hasSymptom].valueBoolean = true
+* extension[noOnsetDate].valueBoolean = false
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis

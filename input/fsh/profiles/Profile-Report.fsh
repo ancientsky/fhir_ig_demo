@@ -141,9 +141,6 @@ RuleSet: ConditionNIDRSRules(patientProfile)
 * verificationStatus ^short = "通報時建議填寫 provisional；研判結果回饋後依研判結果更新"
 * category = $condition-category#encounter-diagnosis
 * code 1..1 MS
-* code.coding ^slicing.discriminator.type = #value
-* code.coding ^slicing.discriminator.path = "system"
-* code.coding ^slicing.rules = #open
 * code.coding contains cdcDisease 1..1 MS
 * code.coding[cdcDisease] ^short = "通報疾病代碼(DISEASE_ID)"
 * code.coding[cdcDisease] from CDCDisease (required)
@@ -174,12 +171,12 @@ RuleSet: ConditionNIDRSRules(patientProfile)
 Invariant: nidrs-con-1
 Description: "無發病日(NO_SICK_DAY)為 true 時，不可填寫發病日期(SICK_DAY)。"
 Severity: #error
-Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').value = true implies onset.empty()"
+Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').where(value = true).exists() implies onset.empty()"
 
 Invariant: nidrs-con-2
 Description: "有症狀(HAS_SYMPTOM=true)時，發病日期必填；無症狀(HAS_SYMPTOM=false)時，「無發病日」需為 true。"
 Severity: #error
-Expression: "(extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').value = true implies onset.exists()) and (extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').value = false implies extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').value = true)"
+Expression: "(extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').where(value = true).exists() implies onset.exists()) and (extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').where(value = false).exists() implies extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').where(value = true).exists())"
 
 Invariant: nidrs-con-3
 Description: "通報結核病(010)或多重抗藥性結核病(010m)時，有無症狀(HAS_SYMPTOM)與主要症狀(DISEASE_SYMPTOM)不可填寫。"

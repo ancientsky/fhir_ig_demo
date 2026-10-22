@@ -13,7 +13,7 @@ Description: "血清學檢驗結果(SampleAntibodyResult)範例：登革病毒 I
 * identifier[0].system = "https://lims.cdc.gov.tw/antibody-seq"
 * identifier[0].value = "115011400000123-1"
 * status = #final
-* category[0] = $observation-category#laboratory
+* category[twcore] = $observation-category#laboratory
 * code.coding[0].system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-antibody-method"
 * code.coding[0].code = #DENV-IgM
 * code.coding[0].display = "登革病毒IgM抗體(ELISA)"
@@ -37,7 +37,7 @@ Description: "病原體檢驗結果(SamplePathogenResult)範例：螢光定量�
 * identifier[0].system = "https://lims.cdc.gov.tw/pathogen-seq"
 * identifier[0].value = "115011400000123-1"
 * status = #final
-* category[0] = $observation-category#laboratory
+* category[twcore] = $observation-category#laboratory
 * code = CDCPathogenMethod#02 "螢光定量聚合酶連鎖反應(real-time PCR)"
 * subject.identifier.system = $MOI
 * subject.identifier.value = "A223456781"

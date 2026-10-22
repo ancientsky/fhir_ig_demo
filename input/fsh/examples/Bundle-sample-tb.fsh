@@ -56,7 +56,7 @@ Description: "法傳TB送驗單(TB_SAMPLE)範例：送驗項目 0 抹片、1 培
 * code.text = "傳染病檢驗送驗"
 * orderDetail[0] = CDCTBTestItem#0 "抹片"
 * orderDetail[1] = CDCTBTestItem#1 "培養"
-* reasonCode[0] = CDCTestDisease#010 "結核病"
+// reasonCode(送驗疾病 010 結核病)由 ServiceRequestNIDRSTBSample 之固定值自動帶入
 * subject = Reference(patient-tb) "李建國"
 * authoredOn = "2026-03-10"
 * requester = Reference(role-mmh-requester) "吳佩珊"

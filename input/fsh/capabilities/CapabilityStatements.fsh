@@ -39,10 +39,10 @@ RuleSet: NIDRSProcessMessageOperation(expectation)
 * rest[=].operation[=].name = "process-message"
 * rest[=].operation[=].definition = $process-message
 
+// 註：FHIR R4 之 capabilitystatement-expectation 擴充不允許用於 messaging.supportedMessage，
+// 故 SHALL/SHOULD 期望值僅記載於 messaging.documentation(expectation 參數保留供閱讀)。
 RuleSet: NIDRSSupportedMessage(mode, expectation, definition)
-* messaging[=].supportedMessage[+].extension[0].url = $cs-expectation
-* messaging[=].supportedMessage[=].extension[0].valueCode = #{expectation}
-* messaging[=].supportedMessage[=].mode = #{mode}
+* messaging[=].supportedMessage[+].mode = #{mode}
 * messaging[=].supportedMessage[=].definition = Canonical({definition})
 
 RuleSet: NIDRSSecurity

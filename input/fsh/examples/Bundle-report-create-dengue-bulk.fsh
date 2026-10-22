@@ -144,7 +144,7 @@ Description: "登革熱大量通報之通報單範例(1)：通報疾病區塊及
 * section[disease].code = $LNC#11450-4 "Problem list - Reported"
 * section[disease].entry[0] = Reference(condition-dengue-bulk-1)
 * section[epidemiology].title = "流行病學資料"
-* section[epidemiology].code = $LNC#29762-2 "Social history Narrative"
+* section[epidemiology].code = $LNC#29762-2 "Social history note"
 * section[epidemiology].entry[epiFlag][0] = Reference(obs-dengue-bulk-1-has-travel)
 
 Instance: comp-report-dengue-bulk-2
@@ -164,7 +164,7 @@ Description: "登革熱大量通報之通報單範例(2)：通報疾病區塊及
 * section[disease].code = $LNC#11450-4 "Problem list - Reported"
 * section[disease].entry[0] = Reference(condition-dengue-bulk-2)
 * section[epidemiology].title = "流行病學資料"
-* section[epidemiology].code = $LNC#29762-2 "Social history Narrative"
+* section[epidemiology].code = $LNC#29762-2 "Social history note"
 * section[epidemiology].entry[epiFlag][0] = Reference(obs-dengue-bulk-2-has-travel)
 
 Instance: mh-report-create-dengue-bulk

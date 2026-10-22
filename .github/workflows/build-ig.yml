@@ -96,6 +96,8 @@ jobs:
             head -n 40 output/qa.txt
             echo "---- terminology (SNOMED CT / LOINC) issues ----"
             grep -n -i -E 'snomed|loinc' output/qa.txt | grep -i -E 'error|unknown|not found|wrong display|invalid' | head -n 100 || true
+            echo "---- ERROR lines ----"
+            grep -n -E '^ERROR' output/qa.txt | cut -c1-400 | head -n 60 || true
           fi
 
   deploy:

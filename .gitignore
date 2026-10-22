@@ -1,0 +1,9 @@
+# IG Publisher / SUSHI 產出
+fsh-generated/
+output/
+temp/
+template/
+input-cache/
+*.jar
+.DS_Store
+__pycache__/

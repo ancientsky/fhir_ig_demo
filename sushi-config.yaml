@@ -1,0 +1,80 @@
+# 臺灣法定傳染病電子病歷自動通報實作指引 (非官方示範)
+# 依據：衛生福利部疾病管制署「NIDRS電子病歷傳染病自動通報作業(2.0)工作說明書」V1.42 (115/09/29)
+# 風格與命名慣例參考：臺灣傳染病檢驗報告實作指引 TWIDIR (https://twidir.cdc.gov.tw/twidir/)
+id: tw.demo.nidrs
+canonical: https://ancientsky.github.io/fhir_ig_demo
+name: TWNIDRS
+title: "臺灣法定傳染病電子病歷自動通報實作指引"
+description: "臺灣法定傳染病電子病歷自動通報實作指引(Taiwan NIDRS EMR Case Reporting Implementation Guide，TWNIDRS IG)，將「NIDRS電子病歷傳染病自動通報作業(2.0)工作說明書」V1.42 之通報單新增、修改、病歷上傳、送驗與研判/檢驗結果回饋之 JSON 交換格式轉換為 HL7 FHIR R4 規格。本 IG 為非官方示範版本。"
+status: draft # draft | active | retired | unknown
+version: 0.1.0
+fhirVersion: 4.0.1
+copyrightYear: 2026+
+releaseLabel: ci-build # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
+license: CC0-1.0
+jurisdiction: urn:iso:std:iso:3166#TW
+publisher:
+  name: fhir_ig_demo（非官方示範）
+  url: https://github.com/ancientsky/fhir_ig_demo
+
+dependencies:
+  tw.gov.mohw.twcore:
+    id: TWCore
+    uri: https://twcore.mohw.gov.tw/ig/twcore/ImplementationGuide/tw.gov.mohw.twcore
+    version: 1.0.0
+
+pages:
+  index.md:
+    title: 應用說明
+  workflow.md:
+    title: 作業流程與交換訊息
+  models.md:
+    title: 邏輯模型
+  mapping.md:
+    title: 欄位對應(JSON→FHIR)
+  profiles.md:
+    title: FHIR Profiles
+  supplement-fields.md:
+    title: 疾病增補欄位(附錄二)
+  validation.md:
+    title: 檢核規則
+  terminologies.md:
+    title: 專門術語
+  capabilitystatements.md:
+    title: 能力聲明
+  security.md:
+    title: 安全性
+  examples.md:
+    title: 範例
+  twidir.md:
+    title: 與TWIDIR之關係
+  downloads.md:
+    title: 結構定義與範例檔下載
+  changes.md:
+    title: 版本異動說明
+
+menu:
+  應用說明: index.html
+  目錄: toc.html
+  作業流程: workflow.html
+  規範文件:
+    邏輯模型: models.html
+    欄位對應(JSON→FHIR): mapping.html
+    FHIR Profiles: profiles.html
+    疾病增補欄位: supplement-fields.html
+    檢核規則: validation.html
+    專門術語: terminologies.html
+    能力聲明: capabilitystatements.html
+    全部構件: artifacts.html
+  範例: examples.html
+  下載: downloads.html
+  安全性: security.html
+  與TWIDIR之關係: twidir.html
+
+parameters:
+  default-version: false
+  apply-version: false
+  show-inherited-invariants: false
+
+instanceOptions:
+  manualSliceOrdering: true

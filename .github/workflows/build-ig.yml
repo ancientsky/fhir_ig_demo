@@ -1,0 +1,100 @@
+name: Build and deploy IG
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Regenerate terminology and questionnaires
+        run: |
+          pip install openpyxl python-docx
+          python3 scripts/gen_terminology.py
+          python3 scripts/gen_questionnaires.py
+
+      - name: Install Ruby and Jekyll
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby-full build-essential
+          sudo gem install jekyll --no-document
+          jekyll --version
+
+      - name: Download IG Publisher
+        run: |
+          mkdir -p input-cache
+          curl -fL https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar -o input-cache/publisher.jar
+
+      - name: Run SUSHI
+        run: sushi build .
+
+      - name: Run IG Publisher
+        run: java -Xmx6g -Dfile.encoding=UTF-8 -jar input-cache/publisher.jar -ig . -no-sushi
+
+      - name: Upload QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ig-qa
+          path: |
+            output/qa.html
+            output/qa.min.html
+            output/qa.json
+            output/qa.txt
+            output/qa.compare.txt
+            output/qa-tx.html
+            output/qa-eslintcompare.html
+            fsh-generated/fsh-index.json
+          if-no-files-found: warn
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

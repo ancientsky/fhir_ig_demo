@@ -331,15 +331,6 @@ Description: "旅遊史地區(TRAVEL_AREA)：國內旅遊填縣市代碼；國�
 * include codes from system CDCCounty
 * include codes from system CDCCountry
 
-ValueSet: NIDRSDeterminedNonconform
-Id: nidrs-determine-nonconform-reason
-Title: "CDC-NIDRS-研判結果「不符合疾病分類」細項值集"
-Description: "CDC-NIDRS-研判結果「不符合疾病分類」細項值集"
-* ^experimental = false
-* ^date = "2026-09-29"
-* ^version = "0.1.0"
-* include codes from system CDCDetermineNonconformReason
-
 CodeSystem: CDCReportSection
 Id: cdc-report-section
 Title: "CDC-NIDRS-通報單區段"

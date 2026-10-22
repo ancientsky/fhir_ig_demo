@@ -13,7 +13,7 @@ RuleSet: CompositionReportRules(patientProfile, conditionProfile, occupationMin,
 * date MS
 * date ^short = "報告日期(REPORTED_DAY)；僅可為建檔日起算往前31天內(含)之日期"
 * author 1..1 MS
-* author only Reference(PractitionerRoleNIDRS)
+* author only Reference(PractitionerRoleNIDRSReporter)
 * author ^short = "通報單登錄者(REPORTER_NAME)、通報單位(HOSPITAL)與通報者聯絡電話(HOSPITAL_CONTACT)"
 * title = "傳染病個案通報單"
 * custodian 1..1 MS
@@ -223,8 +223,8 @@ Id: Encounter-nidrs
 Title: "病患動向-Encounter NIDRS"
 Description: "此病患動向-Encounter NIDRS Profile說明本IG如何進一步定義臺灣核心-就醫事件(TW Core Encounter) Profile以呈現通報時之病患動向(門診、急診待床、入住一般病房、入住加護病房、入住隔離病房、出院、轉院、無就醫)及相關日期。"
 * ^version = "0.1.0"
-* extension contains NIDRSPatientMovement named patientMovement 1..* MS
-* extension[patientMovement] ^short = "病患動向，原規格請擇一填寫"
+* extension contains NIDRSPatientMovement named patientMovement 1..1 MS
+* extension[patientMovement] ^short = "病患動向(門診、急診待床、入住一般病房、入住加護病房、入住隔離病房、出院、轉院、無就醫，請擇一填寫)"
 * class MS
 * class ^short = "門診→AMB、急診待床→EMER、住院(一般病房/加護病房/隔離病房)→IMP"
 * subject 1..1 MS

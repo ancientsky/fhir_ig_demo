@@ -144,6 +144,7 @@ Description: "此通報單新增-Bundle NIDRS Report Create Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..* MS
+* obeys nidrs-bun-1 and nidrs-bun-2
 * insert BundleReportEntries(MessageHeaderNIDRSReportCreate, CompositionNIDRSReport or CompositionNIDRSReportDengueBulk, PatientNIDRS or PatientNIDRSDengueBulk, ConditionNIDRS or ConditionNIDRSDengueBulk)
 
 Profile: BundleNIDRSReportUpdate
@@ -164,7 +165,18 @@ Description: "此通報單修改-Bundle NIDRS Report Update Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..1 MS
+* obeys nidrs-bun-1 and nidrs-bun-2
 * insert BundleReportEntries(MessageHeaderNIDRSReportUpdate, CompositionNIDRSReportUpdate, PatientNIDRS, ConditionNIDRSUpdate)
+
+Invariant: nidrs-bun-1
+Description: "每一筆通報單(Composition)皆須填寫旅遊史有無(HAS_TRAVEL_HISTORY，1..1)。"
+Severity: #error
+Expression: "entry.resource.ofType(Observation).where(code.coding.where(code='HAS_TRAVEL_HISTORY').exists()).count() >= entry.resource.ofType(Composition).count()"
+
+Invariant: nidrs-bun-2
+Description: "MessageHeader 須為 Bundle 之第一筆 entry。"
+Severity: #error
+Expression: "entry.first().resource.ofType(MessageHeader).exists()"
 
 RuleSet: BundleReportEntries(mh, comp, pat, cond)
 * entry[messageHeader] ^short = "訊息表頭，須為第一筆 entry"
@@ -180,7 +192,7 @@ RuleSet: BundleReportEntries(mh, comp, pat, cond)
 * entry[practitioner] ^short = "通報單登錄者、診斷醫師"
 * entry[practitioner].resource only PractitionerNIDRS
 * entry[practitionerRole] ^short = "通報者角色(登錄者、通報單位、通報者聯絡電話)"
-* entry[practitionerRole].resource only PractitionerRoleNIDRS
+* entry[practitionerRole].resource only PractitionerRoleNIDRSReporter
 * entry[encounter] ^short = "病患動向"
 * entry[encounter].resource only EncounterNIDRS
 * entry[observation] ^short = "流行病學資料、死亡原因"

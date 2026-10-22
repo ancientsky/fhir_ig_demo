@@ -79,6 +79,7 @@ RuleSet: PatientNIDRSRules(phoneMin, deceasedMin)
 * address ^short = "居住地址"
 * address.extension contains NIDRSAdministrativeArea named adminArea 1..1 MS
 * address.extension[adminArea] ^short = "居住縣市(RESIDENCE_COUNTY)/鄉鎮市區(RESIDENCE_TOWN)/村里(RESIDENCE_VILLAGE)代碼"
+* address.extension[adminArea].extension[town] 1..1
 * address.text MS
 * address.text ^short = "街道地址(ADDRESS)"
 * address.text ^maxLength = 150
@@ -158,6 +159,12 @@ Description: "此TB送驗個案-Patient NIDRS TB Sample Profile說明本IG如何
 * address.text 1..1 MS
 * address.text ^short = "居住詳細地址(ADDRESS)"
 * address.text ^maxLength = 40
+* obeys nidrs-pat-4
+
+Invariant: nidrs-pat-4
+Description: "TB送驗單性別(SEX)僅可為 F 女生或 M 男生。"
+Severity: #error
+Expression: "gender = 'female' or gender = 'male'"
 
 // ============================================================
 // 個案生母(RelatedPerson)
@@ -233,7 +240,7 @@ Description: "此指定收件單位-Organization NIDRS Lab Profile說明本IG如
 Invariant: nidrs-lab-1
 Description: "指定收件單位代碼須與指定收件單位類型一致：類型 1(疾管署)使用 CDCLabUnit 代碼；類型 6(認可實驗室)使用 CDCApprovedLab 或醫事機構代碼。"
 Severity: #error
-Expression: "type.coding.where(code='1').exists() implies identifier.where(system='https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-lab-unit').exists()"
+Expression: "(type.coding.where(code='1').exists() implies identifier.where(system='https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-lab-unit').exists()) and (type.coding.where(code='6').exists() implies identifier.where(system='https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-approved-lab' or system='https://twcore.mohw.gov.tw/ig/twcore/CodeSystem/organization-identifier-tw').exists())"
 
 // ============================================================
 // 醫事人員(Practitioner / PractitionerRole)
@@ -264,3 +271,12 @@ Description: "此通報者/送驗人員角色-PractitionerRole NIDRS Profile說�
 * telecom MS
 * telecom ^short = "通報者聯絡電話(HOSPITAL_CONTACT)"
 * telecom.value ^maxLength = 100
+
+Profile: PractitionerRoleNIDRSReporter
+Parent: PractitionerRoleNIDRS
+Id: PractitionerRole-nidrs-reporter
+Title: "通報者角色-PractitionerRole NIDRS Reporter"
+Description: "此通報者角色-PractitionerRole NIDRS Reporter Profile說明通報單登錄者(REPORTER_NAME)、通報單位(HOSPITAL)及通報者聯絡電話(HOSPITAL_CONTACT，必填)。"
+* ^version = "0.1.0"
+* telecom 1..* MS
+* telecom.value 1..1

@@ -210,7 +210,7 @@ Description: "傳染病個案通報單(REPORT)範例：登革熱境外移入疑�
 * section[patientMovement].code = $LNC#46240-8 "History of Hospitalizations+Outpatient visits Narrative"
 * section[patientMovement].entry[0] = Reference(encounter-dengue)
 * section[epidemiology].title = "流行病學資料"
-* section[epidemiology].code = $LNC#29762-2 "Social history Narrative"
+* section[epidemiology].code = $LNC#29762-2 "Social history note"
 * section[epidemiology].entry[occupation] = Reference(obs-dengue-occupation)
 * section[epidemiology].entry[epiFlag][0] = Reference(obs-dengue-has-travel)
 * section[epidemiology].entry[epiFlag][1] = Reference(obs-dengue-has-animal)

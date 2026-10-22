@@ -56,7 +56,7 @@ RuleSet: CompositionReportRules(patientProfile, conditionProfile, occupationMin,
 // 流行病學資料
 * section[epidemiology] ^short = "流行病學資料(職業、旅遊史、接觸動物史、暴露史、人口密集機構)"
 * section[epidemiology].title = "流行病學資料"
-* section[epidemiology].code = $LNC#29762-2 "Social history Narrative"
+* section[epidemiology].code = $LNC#29762-2 "Social history note"
 * section[epidemiology].entry 1..* MS
 * section[epidemiology].entry ^slicing.discriminator.type = #profile
 * section[epidemiology].entry ^slicing.discriminator.path = "resolve()"

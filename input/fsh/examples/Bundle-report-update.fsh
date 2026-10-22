@@ -7,7 +7,7 @@
 
 Instance: condition-dengue-update
 InstanceOf: ConditionNIDRSUpdate
-Usage: #example
+Usage: #inline
 Title: "通報疾病-登革熱(修改)"
 Description: "修改通報單時之通報疾病範例：帶入原通報單號(REPORT_ID 1150123456789)，通報疾病維持登革熱(061)。"
 * insert ExReportIdIdentifier(1150123456789)
@@ -32,7 +32,7 @@ Description: "修改通報單時之通報疾病範例：帶入原通報單號(RE
 
 Instance: encounter-dengue-icu
 InstanceOf: EncounterNIDRS
-Usage: #example
+Usage: #inline
 Title: "病患動向-入住加護病房"
 Description: "病患動向範例：2026-01-14 入院，2026-01-17 首次入住加護病房(HOSPITALIZED_ICU、STAY_IN_ICU)。"
 * extension[patientMovement].valueCodeableConcept = CDCPatientMovement#icu "入住加護病房"
@@ -48,7 +48,7 @@ Description: "病患動向範例：2026-01-14 入院，2026-01-17 首次入住�
 
 Instance: qr-dengue-supplement-update
 InstanceOf: QuestionnaireResponseNIDRS
-Usage: #example
+Usage: #inline
 Title: "登革熱增補欄位填答(修改)"
 Description: "登革熱(061)疾病增補欄位修改範例：有警示徵象、NS1 快篩陽性，符合重症診斷條件(嚴重血漿滲漏導致休克)。"
 * questionnaire = "https://ancientsky.github.io/fhir_ig_demo/Questionnaire/nidrs-supplement-061"
@@ -88,7 +88,7 @@ Description: "登革熱(061)疾病增補欄位修改範例：有警示徵象、N
 
 Instance: comp-report-dengue-update
 InstanceOf: CompositionNIDRSReportUpdate
-Usage: #example
+Usage: #inline
 Title: "傳染病個案通報單-登革熱(修改)"
 Description: "傳染病個案通報單修改範例：填寫修改原因(MODIFIED_REASON)，更新病患動向為入住加護病房並補充重症資料。"
 * extension[phbReceivedDate].valueDate = "2026-01-14"
@@ -120,7 +120,7 @@ Description: "傳染病個案通報單修改範例：填寫修改原因(MODIFIED
 
 Instance: mh-report-update
 InstanceOf: MessageHeaderNIDRSReportUpdate
-Usage: #example
+Usage: #inline
 Title: "通報單修改訊息表頭-登革熱"
 Description: "通報單修改作業(EMRMsg02)之訊息表頭範例。"
 * eventCoding = CDCMessageEvent#EMRMsg02 "通報單修改"

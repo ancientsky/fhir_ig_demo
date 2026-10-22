@@ -7,7 +7,7 @@
 
 Instance: patient-dengue-bulk-1
 InstanceOf: PatientNIDRSDengueBulk
-Usage: #example
+Usage: #inline
 Title: "登革熱大量通報個案-許文彬"
 Description: "登革熱大量通報個案範例(1)：本國籍男性，僅填寫手機，未填寫連絡電話與是否死亡。"
 * insert ExIdCardNumber(D220876542)
@@ -32,7 +32,7 @@ Description: "登革熱大量通報個案範例(1)：本國籍男性，僅填寫
 
 Instance: patient-dengue-bulk-2
 InstanceOf: PatientNIDRSDengueBulk
-Usage: #example
+Usage: #inline
 Title: "登革熱大量通報個案-阮氏蘭"
 Description: "登革熱大量通報個案範例(2)：非本國籍(越南籍)外籍配偶，以居留證統一證號通報，並填寫姓名羅馬拼音與非本國籍居民身分。"
 * identifier[residentNumber].use = #official
@@ -66,7 +66,7 @@ Description: "登革熱大量通報個案範例(2)：非本國籍(越南籍)外�
 
 Instance: condition-dengue-bulk-1
 InstanceOf: ConditionNIDRSDengueBulk
-Usage: #example
+Usage: #inline
 Title: "通報疾病-登革熱大量通報(1)"
 Description: "登革熱大量通報之通報疾病範例(1)：未填寫有無症狀，僅填寫主要症狀與發病日。"
 * extension[noOnsetDate].valueBoolean = false
@@ -85,7 +85,7 @@ Description: "登革熱大量通報之通報疾病範例(1)：未填寫有無症
 
 Instance: condition-dengue-bulk-2
 InstanceOf: ConditionNIDRSDengueBulk
-Usage: #example
+Usage: #inline
 Title: "通報疾病-登革熱大量通報(2)"
 Description: "登革熱大量通報之通報疾病範例(2)：未填寫有無症狀與主要症狀，僅填寫發病日。"
 * extension[noOnsetDate].valueBoolean = false
@@ -101,7 +101,7 @@ Description: "登革熱大量通報之通報疾病範例(2)：未填寫有無症
 
 Instance: obs-dengue-bulk-1-has-travel
 InstanceOf: ObservationNIDRSEpiFlag
-Usage: #example
+Usage: #inline
 Title: "旅遊史-無(大量通報個案1)"
 Description: "登革熱大量通報個案(1)之流行病學資料：無旅遊史(HAS_TRAVEL_HISTORY=false)，研判為本土感染。"
 * status = #final
@@ -112,7 +112,7 @@ Description: "登革熱大量通報個案(1)之流行病學資料：無旅遊史
 
 Instance: obs-dengue-bulk-2-has-travel
 InstanceOf: ObservationNIDRSEpiFlag
-Usage: #example
+Usage: #inline
 Title: "旅遊史-無(大量通報個案2)"
 Description: "登革熱大量通報個案(2)之流行病學資料：無旅遊史(HAS_TRAVEL_HISTORY=false)。"
 * status = #final
@@ -123,7 +123,7 @@ Description: "登革熱大量通報個案(2)之流行病學資料：無旅遊史
 
 Instance: comp-report-dengue-bulk-1
 InstanceOf: CompositionNIDRSReportDengueBulk
-Usage: #example
+Usage: #inline
 Title: "傳染病個案通報單-登革熱大量通報(1)"
 Description: "登革熱大量通報之通報單範例(1)：通報疾病區塊及旅遊史有無；未填寫職業。"
 * extension[phbReceivedDate].valueDate = "2026-08-19"
@@ -144,7 +144,7 @@ Description: "登革熱大量通報之通報單範例(1)：通報疾病區塊及
 
 Instance: comp-report-dengue-bulk-2
 InstanceOf: CompositionNIDRSReportDengueBulk
-Usage: #example
+Usage: #inline
 Title: "傳染病個案通報單-登革熱大量通報(2)"
 Description: "登革熱大量通報之通報單範例(2)：通報疾病區塊及旅遊史有無；未填寫職業。"
 * extension[phbReceivedDate].valueDate = "2026-08-19"
@@ -164,7 +164,7 @@ Description: "登革熱大量通報之通報單範例(2)：通報疾病區塊及
 
 Instance: mh-report-create-dengue-bulk
 InstanceOf: MessageHeaderNIDRSReportCreate
-Usage: #example
+Usage: #inline
 Title: "通報單新增訊息表頭-登革熱大量通報"
 Description: "通報單新增作業(EMRMsg01)之訊息表頭範例：一次傳送兩筆登革熱大量通報單。"
 * eventCoding = CDCMessageEvent#EMRMsg01 "通報單新增"

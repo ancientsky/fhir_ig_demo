@@ -6,7 +6,7 @@
 
 Instance: condition-dengue-determined
 InstanceOf: ConditionNIDRSDetermineResult
-Usage: #example
+Usage: #inline
 Title: "研判結果-登革熱確定病例"
 Description: "研判結果主動通知範例：通報單號 1150123456789，研判結果 30 確定病例，研判時間 2026-01-20，衛生局收到日與建檔日 2026-01-14。"
 * insert ExReportIdIdentifier(1150123456789)
@@ -24,7 +24,7 @@ Description: "研判結果主動通知範例：通報單號 1150123456789，研�
 
 Instance: mh-push-determine-result
 InstanceOf: MessageHeaderNIDRSPushDetermineResult
-Usage: #example
+Usage: #inline
 Title: "研判結果主動通知訊息表頭"
 Description: "研判結果主動通知(PushDetermineResult)之訊息表頭範例。"
 * eventCoding = CDCMessageEvent#PushDetermineResult "研判結果主動通知"

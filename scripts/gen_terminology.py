@@ -188,6 +188,8 @@ def concept_map(cmid, name, title, source_cs, target_system, pairs, equivalence,
 
 
 BASE = "https://ancientsky.github.io/fhir_ig_demo"
+# 概念對應中明確指定之目標代碼顯示名稱(覆寫 ISO 3166 預設名稱)
+COUNTRY_DISPLAY = {"TW": "Taiwan"}
 
 
 def main():
@@ -394,7 +396,7 @@ def main():
     cms.append(concept_map(
         "cdc-country-to-iso3166", "CDCCountryToISO3166", "國家代碼對應(NIDRS國家代碼→ISO 3166-1)",
         f"{BASE}/CodeSystem/cdc-country", "urn:iso:std:iso:3166",
-        [(c, v["props"]["alpha2"], "") for c, v in country.concepts.items() if v["props"].get("alpha2")],
+        [(c, v["props"]["alpha2"], COUNTRY_DISPLAY.get(v["props"]["alpha2"], "")) for c, v in country.concepts.items() if v["props"].get("alpha2")],
         "equivalent", "NIDRS 國家代碼(數字碼)與 ISO 3166-1 二位字母代碼之對應。"))
     symptom_pairs = []
     for r in rows(rwb, "疾病與主要症狀關聯"):

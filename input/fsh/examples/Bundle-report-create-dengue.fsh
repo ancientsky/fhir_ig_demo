@@ -7,7 +7,7 @@
 
 Instance: patient-dengue
 InstanceOf: PatientNIDRS
-Usage: #example
+Usage: #inline
 Title: "通報個案-張雅婷(登革熱)"
 Description: "登革熱通報個案範例：本國籍女性，具身分證統一編號、連絡電話與手機、居住地址(含縣市/鄉鎮市區/村里代碼)。"
 * insert ExIdCardNumber(A223456781)
@@ -48,7 +48,7 @@ Description: "登革熱通報個案範例：本國籍女性，具身分證統一
 
 Instance: condition-dengue
 InstanceOf: ConditionNIDRS
-Usage: #example
+Usage: #inline
 Title: "通報疾病-登革熱(新增)"
 Description: "通報疾病範例：登革熱(061)，發病日 2026-01-10、診斷日 2026-01-14，有症狀(發燒、頭痛、後眼窩痛、肌肉痛、皮疹)。"
 * extension[hasSymptom].valueBoolean = true
@@ -70,7 +70,7 @@ Description: "通報疾病範例：登革熱(061)，發病日 2026-01-10、診�
 
 Instance: encounter-dengue
 InstanceOf: EncounterNIDRS
-Usage: #example
+Usage: #inline
 Title: "病患動向-入住一般病房"
 Description: "病患動向範例：2026-01-14 入住一般病房(HOSPITALIZED_GENERAL_WARD、HOSPITALIZED_DAY)。"
 * extension[patientMovement].valueCodeableConcept = CDCPatientMovement#general-ward "入住一般病房"
@@ -82,7 +82,7 @@ Description: "病患動向範例：2026-01-14 入住一般病房(HOSPITALIZED_GE
 
 Instance: obs-dengue-occupation
 InstanceOf: ObservationNIDRSOccupation
-Usage: #example
+Usage: #inline
 Title: "職業-商業及行政專業人員"
 Description: "通報個案職業(OCCUPATION)範例。"
 * status = #final
@@ -94,7 +94,7 @@ Description: "通報個案職業(OCCUPATION)範例。"
 
 Instance: obs-dengue-has-travel
 InstanceOf: ObservationNIDRSEpiFlag
-Usage: #example
+Usage: #inline
 Title: "旅遊史-有"
 Description: "流行病學資料範例：有旅遊史(HAS_TRAVEL_HISTORY=true)。"
 * status = #final
@@ -105,7 +105,7 @@ Description: "流行病學資料範例：有旅遊史(HAS_TRAVEL_HISTORY=true)�
 
 Instance: obs-dengue-has-animal
 InstanceOf: ObservationNIDRSEpiFlag
-Usage: #example
+Usage: #inline
 Title: "動物接觸史-無"
 Description: "流行病學資料範例：無動物接觸史(HAS_ANIMAL_HISTORY=false)。"
 * status = #final
@@ -116,7 +116,7 @@ Description: "流行病學資料範例：無動物接觸史(HAS_ANIMAL_HISTORY=f
 
 Instance: obs-dengue-travel-vn
 InstanceOf: ObservationNIDRSTravel
-Usage: #example
+Usage: #inline
 Title: "旅遊史明細-越南"
 Description: "旅遊史(Report_Travel)範例：國外旅遊史，越南胡志明市，2025-12-28 至 2026-01-03。"
 * status = #final
@@ -133,7 +133,7 @@ Description: "旅遊史(Report_Travel)範例：國外旅遊史，越南胡志明
 
 Instance: obs-dengue-travel-th
 InstanceOf: ObservationNIDRSTravel
-Usage: #example
+Usage: #inline
 Title: "旅遊史明細-泰國"
 Description: "旅遊史(Report_Travel)範例：國外旅遊史，泰國曼谷，2026-01-03 至 2026-01-08(入境我國)。"
 * status = #final
@@ -150,7 +150,7 @@ Description: "旅遊史(Report_Travel)範例：國外旅遊史，泰國曼谷，
 
 Instance: qr-dengue-supplement
 InstanceOf: QuestionnaireResponseNIDRS
-Usage: #example
+Usage: #inline
 Title: "登革熱增補欄位填答(新增)"
 Description: "登革熱(061)疾病增補欄位(DISEASE_FIELD)範例：無警示徵象、NS1 快篩陽性(採檢日 2026-01-14)、無重症診斷條件。"
 * questionnaire = "https://ancientsky.github.io/fhir_ig_demo/Questionnaire/nidrs-supplement-061"
@@ -185,7 +185,7 @@ Description: "登革熱(061)疾病增補欄位(DISEASE_FIELD)範例：無警示�
 
 Instance: comp-report-dengue
 InstanceOf: CompositionNIDRSReport
-Usage: #example
+Usage: #inline
 Title: "傳染病個案通報單-登革熱(新增)"
 Description: "傳染病個案通報單(REPORT)範例：登革熱境外移入疑似個案，包含通報疾病、病患動向、流行病學資料及疾病增補欄位。"
 * extension[phbReceivedDate].valueDate = "2026-01-14"
@@ -217,7 +217,7 @@ Description: "傳染病個案通報單(REPORT)範例：登革熱境外移入疑�
 
 Instance: mh-report-create-dengue
 InstanceOf: MessageHeaderNIDRSReportCreate
-Usage: #example
+Usage: #inline
 Title: "通報單新增訊息表頭-登革熱"
 Description: "通報單新增作業(EMRMsg01)之訊息表頭範例。"
 * eventCoding = CDCMessageEvent#EMRMsg01 "通報單新增"

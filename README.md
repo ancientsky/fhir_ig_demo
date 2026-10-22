@@ -60,6 +60,7 @@
 pip install openpyxl python-docx
 python3 scripts/gen_terminology.py
 python3 scripts/gen_questionnaires.py
+python3 scripts/gen_standard_maps.py   # SNOMED CT / LOINC 概念對應
 
 # 2. 編譯 FSH
 npm install -g fsh-sushi

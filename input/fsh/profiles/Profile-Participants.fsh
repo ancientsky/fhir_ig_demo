@@ -1,4 +1,18 @@
 // ============================================================
+// 共用檢核(日期)
+// ============================================================
+
+Invariant: nidrs-date-1
+Description: "日期若有值，不得為未來日期。"
+Severity: #error
+Expression: "toString().substring(0, 10) <= today().toString()"
+
+Invariant: nidrs-period-1
+Description: "期間之開始時間不得晚於結束時間(例如首次入住隔離病房日≦轉出隔離病房日、開始時間≦結束時間)。"
+Severity: #error
+Expression: "start.exists() and end.exists() implies start.toString().substring(0, 10) <= end.toString().substring(0, 10)"
+
+// ============================================================
 // 通報個案(Patient)
 // ============================================================
 
@@ -96,7 +110,9 @@ RuleSet: PatientNIDRSRules(phoneMin, deceasedMin)
 * maritalStatus ^short = "婚姻狀況(MARRIAGE)：請以 CDCMaritalStatus 代碼填寫，並建議同時填寫 HL7 v3-MaritalStatus 對應代碼"
 * deceased[x] {deceasedMin}..1 MS
 * deceased[x] ^short = "是否死亡(DEATH)/死亡日期(DEATH_DAY)：未死亡填 deceasedBoolean=false；死亡則填 deceasedDateTime(死亡日期必填)"
-* obeys nidrs-pat-2 and nidrs-pat-3
+* obeys nidrs-pat-2 and nidrs-pat-3 and nidrs-pat-5 and nidrs-pat-6 and nidrs-pat-7 and nidrs-pat-8 and nidrs-pat-9 and nidrs-pat-10 and nidrs-pat-11
+* birthDate obeys nidrs-date-1
+* deceasedDateTime obeys nidrs-date-1
 
 Invariant: nidrs-pat-1
 Description: "須至少填寫一種個案證號：身分證統一編號、居留證統一證號、護照號碼或NIDRS系統自動編碼證號(AA/BB/CC)。"
@@ -107,6 +123,41 @@ Invariant: nidrs-pat-2
 Description: "個案死亡(DEATH=true)時，死亡日期(DEATH_DAY)必填，故 deceasedBoolean 僅可為 false。"
 Severity: #error
 Expression: "deceased.ofType(boolean).exists() implies deceased.ofType(boolean) = false"
+
+Invariant: nidrs-pat-5
+Description: "身分證統一編號格式須為 1 碼英文字母 + 1 或 2 + 8 碼數字。"
+Severity: #error
+Expression: "identifier.where(system = 'http://www.moi.gov.tw').all(value.matches('^[A-Z][12][0-9]{8}$'))"
+
+Invariant: nidrs-pat-6
+Description: "居留證統一證號格式須為「1碼英文+9碼數字」或「2碼英文+8碼數字」。"
+Severity: #error
+Expression: "identifier.where(system = 'http://www.immigration.gov.tw').all(value.matches('^([A-Za-z][0-9]{9}|[A-Za-z]{2}[0-9]{8})$'))"
+
+Invariant: nidrs-pat-7
+Description: "性別宜與身分證統一編號第二碼一致(1=男性、2=女性)。"
+Severity: #warning
+Expression: "identifier.where(system = 'http://www.moi.gov.tw').value.exists() implies ((identifier.where(system = 'http://www.moi.gov.tw').value.substring(1, 1) = '1' implies gender = 'male') and (identifier.where(system = 'http://www.moi.gov.tw').value.substring(1, 1) = '2' implies gender = 'female'))"
+
+Invariant: nidrs-pat-8
+Description: "NIDRS系統自動編碼證號僅可填入 AA(本國新生兒)、BB(本國人士)、CC(外國人士)，或修改通報時之系統自動編碼流水證號(例：AA11300001)。"
+Severity: #error
+Expression: "identifier.where(system = 'https://ancientsky.github.io/fhir_ig_demo/sid/nidrs-temp-id').all(value.matches('^(AA|BB|CC)([0-9]{8})?$'))"
+
+Invariant: nidrs-pat-9
+Description: "國籍為本國籍(CITIZEN=0)時，國家僅可填 158；為非本國籍(CITIZEN=1)時，國家不可填 158。"
+Severity: #error
+Expression: "(extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-citizen').where(value.code = '0').exists() and extension('http://hl7.org/fhir/StructureDefinition/patient-nationality').exists() implies extension('http://hl7.org/fhir/StructureDefinition/patient-nationality').extension('code').value.coding.where(system = 'https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-country').code = '158') and (extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-citizen').where(value.code = '1').exists() implies extension('http://hl7.org/fhir/StructureDefinition/patient-nationality').extension('code').value.coding.where(system = 'https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-country' and code = '158').empty())"
+
+Invariant: nidrs-pat-10
+Description: "國家代碼填寫「其他」(OTH)時，其他國家(NATIONALITY_OTHER，填於 valueCodeableConcept.text)必填。"
+Severity: #error
+Expression: "extension('http://hl7.org/fhir/StructureDefinition/patient-nationality').extension('code').value.where(coding.code = 'OTH').all(text.exists())"
+
+Invariant: nidrs-pat-11
+Description: "非本國籍居民身分填寫「其他」(9)時，非本國籍居民身分說明(RESIDENCE_TYPE_OTHER，填於 valueCodeableConcept.text)必填。"
+Severity: #error
+Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-residence-type').value.where(coding.code = '9').all(text.exists())"
 
 Invariant: nidrs-pat-3
 Description: "國籍為本國籍(CITIZEN=0)時，不可填寫非本國籍居民身分(RESIDENCE_TYPE)。"
@@ -174,7 +225,8 @@ Description: "此TB送驗個案-Patient NIDRS TB Sample Profile說明本IG如何
 * address.text 1..1 MS
 * address.text ^short = "居住詳細地址(ADDRESS)"
 * address.text ^maxLength = 40
-* obeys nidrs-pat-4
+* obeys nidrs-pat-4 and nidrs-pat-5 and nidrs-pat-6 and nidrs-pat-7 and nidrs-pat-8
+* birthDate obeys nidrs-date-1
 
 Invariant: nidrs-pat-4
 Description: "TB送驗單性別(SEX)僅可為 F 女生或 M 男生。"

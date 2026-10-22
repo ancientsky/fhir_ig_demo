@@ -144,7 +144,7 @@ Description: "此通報單新增-Bundle NIDRS Report Create Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..* MS
-* obeys nidrs-bun-1 and nidrs-bun-2
+* obeys nidrs-bun-1 and nidrs-bun-2 and nidrs-bun-4 and nidrs-bun-5 and nidrs-bun-6 and nidrs-bun-7
 * insert BundleReportEntries(MessageHeaderNIDRSReportCreate, CompositionNIDRSReport or CompositionNIDRSReportDengueBulk, PatientNIDRS or PatientNIDRSDengueBulk, ConditionNIDRS or ConditionNIDRSDengueBulk)
 
 Profile: BundleNIDRSReportUpdate
@@ -165,7 +165,7 @@ Description: "此通報單修改-Bundle NIDRS Report Update Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..1 MS
-* obeys nidrs-bun-1 and nidrs-bun-2
+* obeys nidrs-bun-1 and nidrs-bun-2 and nidrs-bun-4 and nidrs-bun-5 and nidrs-bun-6 and nidrs-bun-7
 * insert BundleReportEntries(MessageHeaderNIDRSReportUpdate, CompositionNIDRSReportUpdate, PatientNIDRS, ConditionNIDRSUpdate)
 
 Invariant: nidrs-bun-1
@@ -177,6 +177,31 @@ Invariant: nidrs-bun-2
 Description: "MessageHeader 須為 Bundle 之第一筆 entry。"
 Severity: #error
 Expression: "entry.first().resource.ofType(MessageHeader).exists()"
+
+Invariant: nidrs-bun-4
+Description: "出生日期不得晚於發病日期(共同欄位檢核條件：個案日期檢核)。"
+Severity: #error
+Expression: "entry.resource.ofType(Condition).where(onset.exists()).all(subject.resolve().birthDate.empty() or onset.ofType(dateTime).toString().substring(0, 10) >= subject.resolve().birthDate.toString())"
+
+Invariant: nidrs-bun-5
+Description: "發病日期不得晚於死亡日期(共同欄位檢核條件：個案日期檢核)。"
+Severity: #error
+Expression: "entry.resource.ofType(Condition).where(onset.exists()).all(subject.resolve().deceased.ofType(dateTime).empty() or onset.ofType(dateTime).toString().substring(0, 10) <= subject.resolve().deceased.ofType(dateTime).toString().substring(0, 10))"
+
+Invariant: nidrs-bun-6
+Description: "診斷日期不得晚於報告日期(共同欄位檢核條件：通報日期檢核)；僅檢核單一通報單之訊息。"
+Severity: #error
+Expression: "entry.resource.ofType(Composition).count() != 1 or entry.resource.ofType(Condition).all(recordedDate.empty() or recordedDate.toString().substring(0, 10) <= %resource.entry.resource.ofType(Composition).date.toString().substring(0, 10))"
+
+Invariant: nidrs-bun-7
+Description: "填寫死亡原因(DEATH_REASON_A~D、DEATH_REASON_OTHER)時，個案須為死亡且填寫死亡日期。"
+Severity: #error
+Expression: "entry.resource.ofType(Observation).where(code.coding.code = 'DEATH_REASON').all(subject.resolve().deceased.ofType(dateTime).exists())"
+
+Invariant: nidrs-bun-8
+Description: "結核病送驗之採檢日(SAMPLED_DAY)須在送驗日(PHPROVIDEDATE)之前或同日。"
+Severity: #error
+Expression: "entry.resource.ofType(ServiceRequest).where(authoredOn.exists()).all(specimen.resolve().collection.collected.ofType(dateTime).empty() or specimen.resolve().collection.collected.ofType(dateTime).toString().substring(0, 10) <= authoredOn.toString().substring(0, 10))"
 
 RuleSet: BundleReportEntries(mh, comp, pat, cond)
 * entry[messageHeader] ^short = "訊息表頭，須為第一筆 entry"
@@ -232,7 +257,7 @@ Description: "此通報單送驗新增-Bundle NIDRS Sample Profile說明本IG如
     organization 2..* MS and
     practitioner 1..1 MS and
     practitionerRole 1..1 MS
-* obeys nidrs-bun-2 and nidrs-bun-3
+* obeys nidrs-bun-2 and nidrs-bun-3 and nidrs-bun-8
 * entry[messageHeader].resource only MessageHeaderNIDRSSample
 * entry[serviceRequest] ^short = "送驗單(SAMPLE 或 TB_SAMPLE)"
 * entry[serviceRequest].resource only ServiceRequestNIDRSSample or ServiceRequestNIDRSTBSample

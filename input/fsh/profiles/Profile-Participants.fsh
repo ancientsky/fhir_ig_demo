@@ -18,17 +18,23 @@ RuleSet: PatientNIDRSRules(phoneMin, deceasedMin)
 * identifier[passportNumber] ^short = "中華民國護照號碼(IDNO)"
 * identifier[foreignPassport] ^short = "外國護照號碼(IDNO)；system 為 http://hl7.org/fhir/sid/passport-{ISO 3166-1 alpha-3}。因 TW Core passportNumber slice 以 type=PPN 區分且限定中華民國護照，外國護照以本 IG 識別碼類型 foreign-passport 表達"
 * identifier[foreignPassport].use = #official
+* identifier[foreignPassport].type 1..1
+* identifier[foreignPassport].type.coding 1..1
 * identifier[foreignPassport].type.coding.system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-identifier-type"
 * identifier[foreignPassport].type.coding.code = #foreign-passport
 * identifier[foreignPassport].system 1..1
 * identifier[foreignPassport].value 1..1
 * identifier[nidrsTempId] ^short = "無法取得上述證號時，填入 AA(本國新生兒)、BB(本國人士)或 CC(外國人士)，由 NIDRS 自動編碼流水證號"
 * identifier[nidrsTempId].use = #temp
+* identifier[nidrsTempId].type 1..1
+* identifier[nidrsTempId].type.coding 1..1
 * identifier[nidrsTempId].type.coding.system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-identifier-type"
 * identifier[nidrsTempId].type.coding.code = #nidrs-temp
 * identifier[nidrsTempId].system = $NIDRSTempId
 * identifier[nidrsTempId].value 1..1
 * identifier[nhiCardNumber] ^short = "健保卡序號(INSURANCENO)"
+* identifier[nhiCardNumber].type 1..1
+* identifier[nhiCardNumber].type.coding 1..1
 * identifier[nhiCardNumber].type.coding.system = "http://terminology.hl7.org/CodeSystem/v2-0203"
 * identifier[nhiCardNumber].type.coding.code = #HC
 * identifier[nhiCardNumber].system = $NHICard
@@ -136,11 +142,15 @@ Description: "此TB送驗個案-Patient NIDRS TB Sample Profile說明本IG如何
 * identifier[residentNumber] MS
 * identifier[passportNumber] MS
 * identifier[nhiCardNumber] ^short = "健保卡序號(INSURANCENO)"
+* identifier[nhiCardNumber].type 1..1
+* identifier[nhiCardNumber].type.coding 1..1
 * identifier[nhiCardNumber].type.coding.system = "http://terminology.hl7.org/CodeSystem/v2-0203"
 * identifier[nhiCardNumber].type.coding.code = #HC
 * identifier[nhiCardNumber].system = $NHICard
 * identifier[nhiCardNumber].value 1..1
 * identifier[nidrsTempId].use = #temp
+* identifier[nidrsTempId].type 1..1
+* identifier[nidrsTempId].type.coding 1..1
 * identifier[nidrsTempId].type.coding.system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-identifier-type"
 * identifier[nidrsTempId].type.coding.code = #nidrs-temp
 * identifier[nidrsTempId].system = $NIDRSTempId
@@ -211,6 +221,7 @@ Description: "此醫事機構-Organization NIDRS Hospital Profile說明本IG如�
 * identifier contains hospitalCode 1..1 MS
 * identifier[hospitalCode] ^short = "醫事機構代碼(十碼章)"
 * identifier[hospitalCode].type 1..1
+* identifier[hospitalCode].type.coding 1..1
 * identifier[hospitalCode].type.coding.system = "http://terminology.hl7.org/CodeSystem/v2-0203"
 * identifier[hospitalCode].type.coding.code = #PRN
 * identifier[hospitalCode].system 1..1

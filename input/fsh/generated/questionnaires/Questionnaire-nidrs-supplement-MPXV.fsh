@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-M痘(MPXV)之增補欄位(DISEASE_FIEL
 * purpose = "**檢核邏輯** 無"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#MPXV "M痘"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#MPXV "猴痘M痘"
 * item[0].linkId = "section-1"
 * item[0].text = "個案狀況維護與補充資料"
 * item[0].type = #group

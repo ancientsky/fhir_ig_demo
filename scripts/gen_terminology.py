@@ -309,9 +309,9 @@ def main():
 
     county = CS("cdc-county", "CDCCounty", "CDC-NIDRS-縣市代碼", "縣市代碼(含鄉鎮市區.村里)")
     town = CS("cdc-town", "CDCTown", "CDC-NIDRS-鄉鎮市區代碼", "縣市代碼(含鄉鎮市區.村里)",
-              props=OrderedDict(county=(f"{BASE}/CodeSystem/cdc-town#county", "code", "所屬縣市代碼(CDCCounty)")))
+              props=OrderedDict(county=(f"{BASE}/CodeSystem/cdc-town#county", "string", "所屬縣市代碼(CDCCounty)")))
     village = CS("cdc-village", "CDCVillage", "CDC-NIDRS-村里代碼", "縣市代碼(含鄉鎮市區.村里)",
-                 props=OrderedDict(town=(f"{BASE}/CodeSystem/cdc-village#town", "code", "所屬鄉鎮市區代碼(CDCTown)")))
+                 props=OrderedDict(town=(f"{BASE}/CodeSystem/cdc-village#town", "string", "所屬鄉鎮市區代碼(CDCTown)")))
     for r in rows(rwb, "縣市代碼(含鄉鎮市區.村里)"):
         if len(r) < 6 or not r[1]:
             continue
@@ -404,6 +404,16 @@ def main():
         "cdc-disease-symptom", "CDCDiseaseSymptom", "疾病與主要症狀關聯",
         f"{BASE}/CodeSystem/cdc-disease", f"{BASE}/CodeSystem/cdc-symptom", symptom_pairs, "relatedto",
         "通報疾病(DISEASE_ID)可填報之主要症狀(DISEASE_SYMPTOM)。若填寫非該疾病關聯之症狀，NIDRS 將自動改填為其他(999)，並將原症狀填入 DISEASE_SYMPTOM_OTHER。"))
+    test_codes = next(cs for cs in systems if cs.cid == "cdc-test-disease").concepts
+    # 關聯表中少數疾病代碼(如 010m、0703)未列於「疾管署之可送驗疾病代碼」，改以通報疾病代碼(cdc-disease)另立概念對應
+    other_specimen = [x for x in disease_specimen if x[0] not in test_codes]
+    disease_specimen = [x for x in disease_specimen if x[0] in test_codes]
+    if other_specimen:
+        cms.append(concept_map(
+            "cdc-disease-specimen", "CDCDiseaseSpecimen", "送驗疾病與檢體類別之關聯(以通報疾病代碼表示者)",
+            f"{BASE}/CodeSystem/cdc-disease", f"{BASE}/CodeSystem/cdc-specimen-type", other_specimen, "relatedto",
+            "「送驗疾病與檢體類別之關聯」中，疾病代碼未列於「疾管署之可送驗疾病代碼」而屬通報疾病代碼者("
+            + "、".join(sorted({d for d, _, _ in other_specimen})) + ")之可用檢體類別。"))
     cms.append(concept_map(
         "cdc-test-disease-specimen", "CDCTestDiseaseSpecimen", "送驗疾病與檢體類別之關聯",
         f"{BASE}/CodeSystem/cdc-test-disease", f"{BASE}/CodeSystem/cdc-specimen-type", disease_specimen, "relatedto",

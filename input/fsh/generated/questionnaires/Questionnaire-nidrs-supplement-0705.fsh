@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-急性病毒性C型肝炎(0705)之增�
 * purpose = "**檢核邏輯** 通報狀態＝不可通報 If 勾選\"經醫師研判「診斷為急性C型肝炎，排除慢性肝炎急性發作且排除其他原因引起之肝功能異常發炎」\" then 通報狀態＝可通報 End If"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#0705 "急性病毒性C型肝炎"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#0705 "急性病毒性Ｃ型肝炎"
 * item[0].linkId = "section-1"
 * item[0].text = "臨床症狀"
 * item[0].type = #group

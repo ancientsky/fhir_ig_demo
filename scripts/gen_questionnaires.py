@@ -43,10 +43,11 @@ def fsh_str(t):
 
 
 def load_disease_codes():
-    codes = {}
+    codes, displays = {}, {}
     for m in re.finditer(r'^\* #"?([^" ]+)"? "([^"]+)"', DISEASE_FSH.read_text(encoding="utf-8"), re.M):
         codes.setdefault(fold(m.group(2)), m.group(1))
-    return codes
+        displays.setdefault(m.group(1), m.group(2))
+    return codes, displays
 
 
 def extract():
@@ -211,7 +212,7 @@ class Builder:
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    codes = load_disease_codes()
+    codes, displays = load_disease_codes()
     diseases = extract()
     index = []
     for x in diseases:
@@ -249,7 +250,7 @@ def main():
             f'* purpose = "{fsh_str(purpose)}"',
             "* subjectType = #Patient",
             '* useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus',
-            f'* useContext[0].valueCodeableConcept = {BASE}/CodeSystem/cdc-disease#{code if re.match(r"^[A-Za-z0-9._]+$", code) else chr(34) + code + chr(34)} "{fsh_str(x["name"])}"',
+            f'* useContext[0].valueCodeableConcept = {BASE}/CodeSystem/cdc-disease#{code if re.match(r"^[A-Za-z0-9._]+$", code) else chr(34) + code + chr(34)} "{fsh_str(displays.get(code, x["name"]))}"',
         ]
         (OUT / f"Questionnaire-{qid}.fsh").write_text("\n".join(head + b.lines) + "\n", encoding="utf-8")
         index.append((x["class"], x["name"] + (f"({x['sub']})" if x["sub"] else ""), code, qid, nkeys, len(x["rules"]) > 0))

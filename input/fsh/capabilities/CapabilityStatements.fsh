@@ -40,8 +40,8 @@ RuleSet: NIDRSProcessMessageOperation(expectation)
 * rest[=].operation[=].definition = $process-message
 
 // 註：FHIR R4 之 capabilitystatement-expectation 擴充不允許用於 messaging.supportedMessage，
-// 故 SHALL/SHOULD 期望值僅記載於 messaging.documentation(expectation 參數保留供閱讀)。
-RuleSet: NIDRSSupportedMessage(mode, expectation, definition)
+// 故 SHALL/SHOULD 期望值僅記載於 messaging.documentation。
+RuleSet: NIDRSSupportedMessage(mode, definition)
 * messaging[=].supportedMessage[+].mode = #{mode}
 * messaging[=].supportedMessage[=].definition = Canonical({definition})
 
@@ -142,12 +142,12 @@ Description: "臺灣法定傳染病電子病歷自動通報實作指引(TWNIDRS 
 * rest[=].resource[=].profile = Canonical(OperationOutcomeNIDRS)
 
 * messaging[0].documentation = "疾管署傳染病自動通報系統-伺服端必須(SHALL)接收 EMRMsg01~EMRMsg04 訊息並同步回覆 HISMsg01~HISMsg04；個案研判結果或送驗單檢驗結果有異動時，必須(SHALL)主動傳送 PushDetermineResult/PushSampleResult 訊息至通報單位所提供之 `$process-message` 端點。"
-* insert NIDRSSupportedMessage(receiver, SHALL, nidrs-emrmsg01)
-* insert NIDRSSupportedMessage(receiver, SHALL, nidrs-emrmsg02)
-* insert NIDRSSupportedMessage(receiver, SHALL, nidrs-emrmsg03)
-* insert NIDRSSupportedMessage(receiver, SHALL, nidrs-emrmsg04)
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-push-determine-result)
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-push-sample-result)
+* insert NIDRSSupportedMessage(receiver, nidrs-emrmsg01)
+* insert NIDRSSupportedMessage(receiver, nidrs-emrmsg02)
+* insert NIDRSSupportedMessage(receiver, nidrs-emrmsg03)
+* insert NIDRSSupportedMessage(receiver, nidrs-emrmsg04)
+* insert NIDRSSupportedMessage(sender, nidrs-push-determine-result)
+* insert NIDRSSupportedMessage(sender, nidrs-push-sample-result)
 
 // ============================================================
 // 通報醫院端
@@ -207,9 +207,9 @@ Description: "臺灣法定傳染病電子病歷自動通報實作指引(TWNIDRS 
 * insert NIDRSSupportedProfile(ObservationNIDRSPathogenResult)
 
 * messaging[0].documentation = "通報醫院端必須(SHALL)傳送 EMRMsg01~EMRMsg04 訊息並處理同步回覆之 HISMsg01~HISMsg04；建議應該(SHOULD)接收疾管署主動傳送之 PushDetermineResult/PushSampleResult 訊息。"
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-emrmsg01)
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-emrmsg02)
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-emrmsg03)
-* insert NIDRSSupportedMessage(sender, SHALL, nidrs-emrmsg04)
-* insert NIDRSSupportedMessage(receiver, SHOULD, nidrs-push-determine-result)
-* insert NIDRSSupportedMessage(receiver, SHOULD, nidrs-push-sample-result)
+* insert NIDRSSupportedMessage(sender, nidrs-emrmsg01)
+* insert NIDRSSupportedMessage(sender, nidrs-emrmsg02)
+* insert NIDRSSupportedMessage(sender, nidrs-emrmsg03)
+* insert NIDRSSupportedMessage(sender, nidrs-emrmsg04)
+* insert NIDRSSupportedMessage(receiver, nidrs-push-determine-result)
+* insert NIDRSSupportedMessage(receiver, nidrs-push-sample-result)

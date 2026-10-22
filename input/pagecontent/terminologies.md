@@ -97,6 +97,7 @@
 | [國家代碼對應(NIDRS國家代碼→ISO 3166-1)](ConceptMap-cdc-country-to-iso3166.html) | 國家代碼工作表之 ISO 欄位(自動產生) | NIDRS 國家代碼(數字碼)與 ISO 3166-1 二位字母代碼之對應，供轉換為國際代碼(例如外國護照 identifier.system 之國別) |
 | [疾病與主要症狀關聯](ConceptMap-cdc-disease-symptom.html) | 疾病與主要症狀關聯工作表(自動產生) | 通報疾病可填報之主要症狀；填寫非關聯之症狀時，NIDRS 將自動改為其他(999) |
 | [送驗疾病與檢體類別之關聯](ConceptMap-cdc-test-disease-specimen.html) | 送驗疾病與檢體類別之關聯工作表(自動產生，排除停用者) | 送驗疾病可使用之檢體類別 |
+| [送驗疾病與檢體類別之關聯(以通報疾病代碼表示者)](ConceptMap-cdc-disease-specimen.html) | 同上；疾病代碼(010m、0703、0705、091)未列於「疾管署之可送驗疾病代碼」者 | 以通報疾病代碼表示之送驗疾病可使用之檢體類別 |
 | [性別代碼對應](ConceptMap-cdc-gender-to-administrative-gender.html) | 人工定義 | GENDER/SEX 與 FHIR AdministrativeGender |
 | [婚姻狀況代碼對應](ConceptMap-cdc-marital-status-to-v3.html) | 人工定義 | 婚姻代碼與 HL7 v3 MaritalStatus |
 | [聯絡資料類型對應](ConceptMap-cdc-contact-type-to-contactpoint.html) | 人工定義 | CONTACT_TYPE 與 ContactPoint.system/use |

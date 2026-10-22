@@ -123,12 +123,15 @@ Description: "NIDRS 病患動向與 Encounter.class(v3-ActCode)之對應。無�
 * group[0].element[2].code = #general-ward
 * group[0].element[2].target[0].code = #IMP
 * group[0].element[2].target[0].equivalence = #narrower
+* group[0].element[2].target[0].comment = "住院類別(IMP)涵蓋多種病患動向，細分以病患動向擴充表達"
 * group[0].element[3].code = #icu
 * group[0].element[3].target[0].code = #IMP
 * group[0].element[3].target[0].equivalence = #narrower
+* group[0].element[3].target[0].comment = "住院類別(IMP)涵蓋多種病患動向，細分以病患動向擴充表達"
 * group[0].element[4].code = #isolation-room
 * group[0].element[4].target[0].code = #IMP
 * group[0].element[4].target[0].equivalence = #narrower
+* group[0].element[4].target[0].comment = "住院類別(IMP)涵蓋多種病患動向，細分以病患動向擴充表達"
 * group[0].element[5].code = #discharged
 * group[0].element[5].target[0].code = #IMP
 * group[0].element[5].target[0].equivalence = #narrower

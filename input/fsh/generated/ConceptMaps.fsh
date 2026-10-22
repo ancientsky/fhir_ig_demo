@@ -13,6 +13,7 @@ Usage: #definition
 * group[0].target = "urn:iso:std:iso:3166"
 * group[0].element[0].code = #158
 * group[0].element[0].target[0].code = #TW
+* group[0].element[0].target[0].display = "Taiwan"
 * group[0].element[0].target[0].equivalence = #equivalent
 * group[0].element[1].code = #162
 * group[0].element[1].target[0].code = #CX

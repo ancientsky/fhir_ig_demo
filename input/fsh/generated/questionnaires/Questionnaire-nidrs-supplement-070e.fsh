@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-急性病毒性E型肝炎(070e)之增�
 * purpose = "**檢核邏輯** 無"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#070e "急性病毒性E型肝炎"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#070e "急性病毒性Ｅ型肝炎"
 * item[0].linkId = "section-1"
 * item[0].text = "臨床條件"
 * item[0].type = #group

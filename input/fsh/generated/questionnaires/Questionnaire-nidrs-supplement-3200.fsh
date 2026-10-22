@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-侵襲性b型嗜血桿菌感染症(320
 * purpose = "**檢核邏輯** 通報狀態＝不可通報 If count(勾選\"臨床診斷\".選項) > 0 or 輸入其他症狀then 通報狀態＝可通報 End If"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#3200 "侵襲性b型嗜血桿菌感染症"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#3200 "侵襲性ｂ型嗜血桿菌感染症"
 * item[0].linkId = "section-1"
 * item[0].text = "臨床症狀"
 * item[0].type = #group

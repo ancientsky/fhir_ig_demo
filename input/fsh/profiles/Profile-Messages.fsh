@@ -72,7 +72,7 @@ Description: "此疾管署回覆訊息-MessageHeader NIDRS Response Profile說�
 * response.identifier MS
 * response.identifier ^short = "所回覆請求訊息之 MessageHeader.id"
 * response.code MS
-* response.code ^short = "處理狀態(STATUS / Success)：SUCCESS→ok；FAILURE→fatal-error"
+* response.code ^short = "處理狀態(STATUS / Success)：全部成功→ok；任一通報單失敗→fatal-error。HISMsg01 之各 REPORT_RESULT 個別結果：成功者以 Condition(通報單號)、失敗者以各自之 OperationOutcome(issue.expression 指向請求之 entry)表達"
 * response.details MS
 * response.details only Reference(OperationOutcomeNIDRS)
 * response.details ^short = "失敗時之錯誤清單(ERROR_LIST)"
@@ -144,6 +144,7 @@ Description: "此通報單新增-Bundle NIDRS Report Create Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..* MS
+* obeys nidrs-bun-1 and nidrs-bun-2
 * insert BundleReportEntries(MessageHeaderNIDRSReportCreate, CompositionNIDRSReport or CompositionNIDRSReportDengueBulk, PatientNIDRS or PatientNIDRSDengueBulk, ConditionNIDRS or ConditionNIDRSDengueBulk)
 
 Profile: BundleNIDRSReportUpdate
@@ -164,7 +165,18 @@ Description: "此通報單修改-Bundle NIDRS Report Update Profile說明本IG�
     observation 0..* MS and
     questionnaireResponse 0..* MS and
     relatedPerson 0..1 MS
+* obeys nidrs-bun-1 and nidrs-bun-2
 * insert BundleReportEntries(MessageHeaderNIDRSReportUpdate, CompositionNIDRSReportUpdate, PatientNIDRS, ConditionNIDRSUpdate)
+
+Invariant: nidrs-bun-1
+Description: "每一筆通報單(Composition)皆須填寫旅遊史有無(HAS_TRAVEL_HISTORY，1..1)。"
+Severity: #error
+Expression: "entry.resource.ofType(Observation).where(code.coding.where(code='HAS_TRAVEL_HISTORY').exists()).count() >= entry.resource.ofType(Composition).count()"
+
+Invariant: nidrs-bun-2
+Description: "MessageHeader 須為 Bundle 之第一筆 entry。"
+Severity: #error
+Expression: "entry.first().resource.ofType(MessageHeader).exists()"
 
 RuleSet: BundleReportEntries(mh, comp, pat, cond)
 * entry[messageHeader] ^short = "訊息表頭，須為第一筆 entry"
@@ -180,7 +192,7 @@ RuleSet: BundleReportEntries(mh, comp, pat, cond)
 * entry[practitioner] ^short = "通報單登錄者、診斷醫師"
 * entry[practitioner].resource only PractitionerNIDRS
 * entry[practitionerRole] ^short = "通報者角色(登錄者、通報單位、通報者聯絡電話)"
-* entry[practitionerRole].resource only PractitionerRoleNIDRS
+* entry[practitionerRole].resource only PractitionerRoleNIDRSReporter
 * entry[encounter] ^short = "病患動向"
 * entry[encounter].resource only EncounterNIDRS
 * entry[observation] ^short = "流行病學資料、死亡原因"
@@ -216,16 +228,17 @@ Description: "此通報單送驗新增-Bundle NIDRS Sample Profile說明本IG如
     messageHeader 1..1 MS and
     serviceRequest 1..1 MS and
     specimen 1..1 MS and
-    patient 1..1 MS and
+    patient 0..1 MS and
     organization 2..* MS and
     practitioner 1..1 MS and
     practitionerRole 1..1 MS
+* obeys nidrs-bun-2 and nidrs-bun-3
 * entry[messageHeader].resource only MessageHeaderNIDRSSample
 * entry[serviceRequest] ^short = "送驗單(SAMPLE 或 TB_SAMPLE)"
 * entry[serviceRequest].resource only ServiceRequestNIDRSSample or ServiceRequestNIDRSTBSample
 * entry[specimen] ^short = "檢體"
 * entry[specimen].resource only SpecimenNIDRS or SpecimenNIDRSTB
-* entry[patient] ^short = "送驗個案"
+* entry[patient] ^short = "送驗個案；法傳TB送驗單(TB_SAMPLE)必填。法傳送驗單(SAMPLE)原規格無個案資料，ServiceRequest/Specimen.subject 可僅以個案證號(identifier)參照"
 * entry[patient].resource only PatientNIDRS or PatientNIDRSTBSample
 * entry[organization] ^short = "送驗單位與指定收件單位"
 * entry[organization].resource only OrganizationNIDRSHospital or OrganizationNIDRSLab
@@ -233,6 +246,11 @@ Description: "此通報單送驗新增-Bundle NIDRS Sample Profile說明本IG如
 * entry[practitioner].resource only PractitionerNIDRS
 * entry[practitionerRole] ^short = "送驗人員角色(送驗人員與送驗單位)"
 * entry[practitionerRole].resource only PractitionerRoleNIDRS
+
+Invariant: nidrs-bun-3
+Description: "法傳TB送驗單(TB_SAMPLE)須包含送驗個案(Patient)。"
+Severity: #error
+Expression: "entry.resource.ofType(ServiceRequest).where(reasonCode.coding.code='010' and orderDetail.exists()).exists() implies entry.resource.ofType(Patient).exists()"
 
 Profile: BundleNIDRSResponse
 Parent: TWCoreBundle
@@ -253,7 +271,7 @@ Description: "此疾管署回覆-Bundle NIDRS Response Profile說明本IG如何�
 * entry[operationOutcome].resource only OperationOutcomeNIDRS
 * entry[condition] ^short = "成功時，通報單清單(REPORT_LIST：REPORT_ID、DISEASE_ID、IDNO)"
 * entry[condition].resource only ConditionNIDRSCaseRef
-* entry[serviceRequest] ^short = "送驗新增成功時之送驗單(ReturnData.SAMPLE)"
+* entry[serviceRequest] ^short = "送驗新增成功時之送驗單(ReturnData.SAMPLE)；requester/performer 以 contained 或 identifier 參照，subject 以個案證號(identifier)參照"
 * entry[serviceRequest].resource only ServiceRequestNIDRSSample or ServiceRequestNIDRSTBSample
 * entry[specimen] ^short = "送驗新增成功時之檢體(ReturnData.SAMPLE)"
 * entry[specimen].resource only SpecimenNIDRS or SpecimenNIDRSTB

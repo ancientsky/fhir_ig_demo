@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-HIV感染(含母子垂直感染疑似�
 * purpose = "**檢核邏輯** If「孕產婦快篩/初篩陽性」(代碼32)勾選 and (「HIV-1及2抗體確認檢驗方法陽性」(代碼1) or「分子生物學核酸檢測(NAT)陽性」(代碼2) or「HIV抗原p24篩檢陽性，且進行中和試驗確認陽性」(代碼16) 勾選) then 通報狀態＝不可通報 End If If「孕產婦快篩/初篩陽性」勾選 and (「抗原/抗體複合型篩檢(HIV Ag/Ab combination assay)陽性」 or「抗體篩檢陽性」未勾選) then 通報狀態＝不可通報 End If If \"HIV確診定義\"包含「HIV-1及2抗體確認檢驗方法陽性」(代碼1) and \"HIV-1及2抗體確認檢驗方法、檢驗結果報告日、檢驗單位\"未填寫 then 通報狀態＝不可通報 End If If \"HIV確診定義\"包含「分子生物學核酸檢測(NAT)陽性」(代碼2) and (\"NAT檢驗結果報告日、檢驗單位\"未填寫) then 通報狀態＝不可通報 End If If \"HIV確診定義\"包含「HIV抗原p24篩檢陽性，且進行中和試驗確認陽性」(代碼16) and \"HIV抗原p24篩檢檢驗結果報告日、檢驗單位\"未填寫 and \"中和試驗(NT)檢驗結果報告日、檢驗單位\" 未填寫 then 通報狀態＝不可通報 End If If \"急性初期感染判斷\"「本次檢驗流程中，HIV抗原/抗體複合型篩檢結果為抗原陽性」未勾選及填寫 and 「前180天內(含本次)任一檢驗結果為[陰性或未確定]」未勾選及填寫 and 「前180天內(含本次)無相關檢驗結果」未勾選 then 通報狀態＝不可通報 End If"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#044 "HIV感染(含母子垂直感染疑似個案)"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#044 "人類免疫缺乏病毒感染(含母子垂直感染及孕產婦疑似個案)"
 * item[0].linkId = "section-1"
 * item[0].text = "HIV通報定義"
 * item[0].type = #group

@@ -15,7 +15,7 @@ Description: "法定傳染病增補欄位-HIV感染(含母子垂直感染疑似�
 * purpose = "**檢核邏輯** Dim a1 = 「新生兒以快速抗體篩檢、HIV抗原/抗體複合型篩檢或抗體篩檢呈陽性者」 Dim a2 = 「新生兒之生母為人類免疫缺乏病毒感染者」 Dim a3 = 「新生兒之生母臨產時為快速抗體篩檢、HIV抗原/抗體複合型篩檢或抗體篩檢呈陽性者」 通報狀態＝不可通報 If 出生月齡 <= 1 then If勾選\"出生後是否曾接受案母哺育母乳\" and 勾選\"出生6-12小時內是否給予預防性投藥\" then 通報狀態＝可通報 Else 通報狀態＝不可通報 return End If End If If \"HIV確診定義\" = 「出生通報母子垂直感染疑似個案」(代碼4) (and by option勾選a2或a3) (「個案生母資料」的\"生母姓名\"、\"生母證號\"、\"生母國籍\"皆填寫) then 通報狀態＝可通報 End If"
 * subjectType = #Patient
 * useContext[0].code = http://terminology.hl7.org/CodeSystem/usage-context-type#focus
-* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#044 "HIV感染(含母子垂直感染疑似個案)"
+* useContext[0].valueCodeableConcept = https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease#044 "人類免疫缺乏病毒感染(含母子垂直感染及孕產婦疑似個案)"
 * item[0].linkId = "section-1"
 * item[0].text = "HIV通報定義"
 * item[0].type = #group

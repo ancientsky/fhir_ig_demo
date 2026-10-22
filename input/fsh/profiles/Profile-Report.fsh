@@ -13,7 +13,7 @@ RuleSet: CompositionReportRules(patientProfile, conditionProfile, occupationMin,
 * date MS
 * date ^short = "報告日期(REPORTED_DAY)；僅可為建檔日起算往前31天內(含)之日期"
 * author 1..1 MS
-* author only Reference(PractitionerRoleNIDRS)
+* author only Reference(PractitionerRoleNIDRSReporter)
 * author ^short = "通報單登錄者(REPORTER_NAME)、通報單位(HOSPITAL)與通報者聯絡電話(HOSPITAL_CONTACT)"
 * title = "傳染病個案通報單"
 * custodian 1..1 MS
@@ -124,7 +124,7 @@ Description: "此傳染病個案通報單(登革熱大量通報)-Composition NID
 // 通報疾病(Condition)
 // ============================================================
 
-RuleSet: ConditionNIDRSRules(patientProfile, hasSymptomMin)
+RuleSet: ConditionNIDRSRules(patientProfile)
 * ^version = "0.1.0"
 * identifier MS
 * identifier ^slicing.discriminator.type = #value
@@ -141,9 +141,6 @@ RuleSet: ConditionNIDRSRules(patientProfile, hasSymptomMin)
 * verificationStatus ^short = "通報時建議填寫 provisional；研判結果回饋後依研判結果更新"
 * category = $condition-category#encounter-diagnosis
 * code 1..1 MS
-* code.coding ^slicing.discriminator.type = #value
-* code.coding ^slicing.discriminator.path = "system"
-* code.coding ^slicing.rules = #open
 * code.coding contains cdcDisease 1..1 MS
 * code.coding[cdcDisease] ^short = "通報疾病代碼(DISEASE_ID)"
 * code.coding[cdcDisease] from CDCDisease (required)
@@ -160,9 +157,9 @@ RuleSet: ConditionNIDRSRules(patientProfile, hasSymptomMin)
 * asserter only Reference(PractitionerNIDRS)
 * asserter ^short = "診斷醫師(DIAGNOSTICIAN)"
 * extension contains
-    NIDRSHasSymptom named hasSymptom {hasSymptomMin}..1 MS and
+    NIDRSHasSymptom named hasSymptom 0..1 MS and
     NIDRSNoOnsetDate named noOnsetDate 0..1 MS
-* extension[hasSymptom] ^short = "有無症狀(HAS_SYMPTOM)"
+* extension[hasSymptom] ^short = "有無症狀(HAS_SYMPTOM)；除結核病/多重抗藥性結核病外必填(登革熱大量通報除外)"
 * extension[noOnsetDate] ^short = "無發病日(NO_SICK_DAY)"
 * evidence MS
 * evidence ^short = "主要症狀(DISEASE_SYMPTOM)；若有症狀請填寫"
@@ -174,12 +171,12 @@ RuleSet: ConditionNIDRSRules(patientProfile, hasSymptomMin)
 Invariant: nidrs-con-1
 Description: "無發病日(NO_SICK_DAY)為 true 時，不可填寫發病日期(SICK_DAY)。"
 Severity: #error
-Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').value = true implies onset.empty()"
+Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').where(value = true).exists() implies onset.empty()"
 
 Invariant: nidrs-con-2
 Description: "有症狀(HAS_SYMPTOM=true)時，發病日期必填；無症狀(HAS_SYMPTOM=false)時，「無發病日」需為 true。"
 Severity: #error
-Expression: "(extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').value = true implies onset.exists()) and (extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').value = false implies extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').value = true)"
+Expression: "(extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').where(value = true).exists() implies onset.exists()) and (extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').where(value = false).exists() implies extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-no-onset-date').where(value = true).exists())"
 
 Invariant: nidrs-con-3
 Description: "通報結核病(010)或多重抗藥性結核病(010m)時，有無症狀(HAS_SYMPTOM)與主要症狀(DISEASE_SYMPTOM)不可填寫。"
@@ -196,7 +193,13 @@ Parent: TWCoreCondition
 Id: Condition-nidrs
 Title: "通報疾病-Condition NIDRS"
 Description: "此通報疾病-Condition NIDRS Profile說明本IG如何進一步定義臺灣核心-病情、問題或診斷(TW Core Condition) Profile以呈現通報單之通報疾病區塊(DISEASE)與相關日期、臨床症狀。每一通報疾病為一筆 Condition，通報成功後疾管署依疾病分別產生通報單號。"
-* insert ConditionNIDRSRules(PatientNIDRS, 1)
+* insert ConditionNIDRSRules(PatientNIDRS)
+* obeys nidrs-con-5
+
+Invariant: nidrs-con-5
+Description: "有無症狀(HAS_SYMPTOM)為必填；惟通報結核病(010)或多重抗藥性結核病(010m)時不可填寫。"
+Severity: #error
+Expression: "code.coding.where(system='https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease' and (code='010' or code='010m')).empty() implies extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-has-symptom').exists()"
 
 Profile: ConditionNIDRSUpdate
 Parent: ConditionNIDRS
@@ -211,7 +214,7 @@ Parent: TWCoreCondition
 Id: Condition-nidrs-dengue-bulk
 Title: "通報疾病(登革熱大量通報)-Condition NIDRS Dengue Bulk"
 Description: "此通報疾病(登革熱大量通報)-Condition NIDRS Dengue Bulk Profile說明附錄五登革熱大量通報時之通報疾病；有無症狀調整為非必填(惟主要症狀仍維持相依性必填)。"
-* insert ConditionNIDRSRules(PatientNIDRSDengueBulk, 0)
+* insert ConditionNIDRSRules(PatientNIDRSDengueBulk)
 
 // ============================================================
 // 病患動向(Encounter)
@@ -223,10 +226,10 @@ Id: Encounter-nidrs
 Title: "病患動向-Encounter NIDRS"
 Description: "此病患動向-Encounter NIDRS Profile說明本IG如何進一步定義臺灣核心-就醫事件(TW Core Encounter) Profile以呈現通報時之病患動向(門診、急診待床、入住一般病房、入住加護病房、入住隔離病房、出院、轉院、無就醫)及相關日期。"
 * ^version = "0.1.0"
-* extension contains NIDRSPatientMovement named patientMovement 1..* MS
-* extension[patientMovement] ^short = "病患動向，原規格請擇一填寫"
+* extension contains NIDRSPatientMovement named patientMovement 1..1 MS
+* extension[patientMovement] ^short = "病患動向(門診、急診待床、入住一般病房、入住加護病房、入住隔離病房、出院、轉院、無就醫，請擇一填寫)"
 * class MS
-* class ^short = "門診→AMB、急診待床→EMER、住院(一般病房/加護病房/隔離病房)→IMP"
+* class ^short = "門診→AMB、急診待床→EMER、住院(一般病房/加護病房/隔離病房/出院/轉院)→IMP；無就醫時 class 僅填 data-absent-reason 擴充(not-applicable)"
 * subject 1..1 MS
 * subject only Reference(PatientNIDRS or PatientNIDRSDengueBulk)
 * period MS

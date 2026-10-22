@@ -121,7 +121,7 @@ Description: "疾管署個案研判結果與研判時間(ReportDetermineResult.D
 * extension[date].value[x] only dateTime
 * extension[nonconformReason] ^short = "研判結果為「不符合疾病分類」(31)之細項"
 * extension[nonconformReason].value[x] only CodeableConcept
-* extension[nonconformReason].value[x] from NIDRSDeterminedNonconform (required)
+* extension[nonconformReason].value[x] from CDCDetermineNonconformReason (required)
 
 // ===== 病患動向(Encounter) =====
 

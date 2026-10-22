@@ -109,8 +109,8 @@ RuleSet: ServiceRequestNIDRSRules(specimenProfile, patientProfile)
 * note MS
 * note ^short = "個案備註(COMMENTS，100字)"
 * supportingInfo MS
-* supportingInfo ^slicing.discriminator.type = #type
-* supportingInfo ^slicing.discriminator.path = "$this.resolve()"
+* supportingInfo ^slicing.discriminator.type = #value
+* supportingInfo ^slicing.discriminator.path = "identifier.system"
 * supportingInfo ^slicing.rules = #open
 * supportingInfo contains report 0..1 MS
 * supportingInfo[report] only Reference(ConditionNIDRSCaseRef)
@@ -140,7 +140,7 @@ Title: "法傳TB送驗單-ServiceRequest NIDRS TB Sample"
 Description: "此法傳TB送驗單-ServiceRequest NIDRS TB Sample Profile說明本IG如何進一步定義臺灣核心-服務請求(TW Core ServiceRequest) Profile以呈現通報單送驗新增作業(EMRMsg04)之法傳TB送驗單(TB_SAMPLE)。非通報個案可不填法傳通報單號。"
 * insert ServiceRequestNIDRSRules(SpecimenNIDRSTB, PatientNIDRSTBSample)
 * reasonCode 1..1 MS
-* reasonCode = CDCTestDisease#010 "結核病"
+* reasonCode = CDCTestDisease#010
 * orderDetail 1..* MS
 * orderDetail from CDCTBTestItem (required)
 * orderDetail ^short = "送驗項目(PHTESTITEM，可多選)；送驗項目其他說明(PHTESTITEM_OTHER_DESC)請填於 text"
@@ -215,14 +215,11 @@ Description: "此送驗單綜合檢驗結果-DiagnosticReport NIDRS Sample Resul
 * status = #final
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#LAB
 * code MS
-* code.coding ^slicing.discriminator.type = #value
-* code.coding ^slicing.discriminator.path = "system"
-* code.coding ^slicing.rules = #open
 * code.coding contains testDisease 1..1 MS
 * code.coding[testDisease] from CDCTestDisease (required)
 * code.coding[testDisease].system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-test-disease"
 * code.coding[testDisease] ^short = "送驗疾病代碼(DiseaseId)；display 填送驗疾病中文名稱(DiseaseName)"
-* subject ^short = "通報個案；疾管署以個案證號(identifier)參照"
+* subject ^short = "通報個案；原規格 SampleResult 無個案證號，疾管署依通報單號(ReportId)查得之個案證號以 identifier 參照"
 * subject.identifier MS
 * issued 1..1 MS
 * issued ^short = "檢驗結果時間(ResultInformDay)"
@@ -277,6 +274,7 @@ Description: "此病原體檢驗結果-Observation NIDRS Pathogen Result Profile
 * insert ObservationNIDRSLabRules
 * code ^short = "病原體檢驗方法代碼(PathogenId)與名稱(PathogenName)"
 * code from CDCPathogenMethod (extensible)
+* code.coding.system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-pathogen-method"
 * interpretation 1..1
 * value[x] only CodeableConcept
 * valueCodeableConcept from CDCPathogen (required)

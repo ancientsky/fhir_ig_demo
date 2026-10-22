@@ -18,17 +18,11 @@ Description: "NIDRS 表6 疾管署主動回饋個案研判結果至通報單位(
 * DetermineStatus ^example.label = "範例"
 * DetermineStatus ^example.valueString = "5"
 * DetermineDate 0..1 string "研判時間" "研判時間(原規格未定義格式)。原規格資料型態：string。"
-* DetermineDate ^example.label = "範例"
-* DetermineDate ^example.valueString = "2025/08/10 14:30:00"
 * IDNO 0..1 string "身分證號" "身分證號。原規格資料型態：string。"
 * IDNO ^example.label = "範例"
 * IDNO ^example.valueString = "A123456789"
 * PHB_RECEIVED_DAY 0..1 string "衛生局收到日" "衛生局收到日(原規格未定義格式)。原規格資料型態：string。"
-* PHB_RECEIVED_DAY ^example.label = "範例"
-* PHB_RECEIVED_DAY ^example.valueString = "2025/08/03"
 * CDC_RECEIVED_DATE 0..1 string "建檔日" "建檔日(原規格未定義格式)。原規格資料型態：string。"
-* CDC_RECEIVED_DATE ^example.label = "範例"
-* CDC_RECEIVED_DATE ^example.valueString = "2025/08/03"
 
 Mapping: ReportDetermineResultModelToFHIR
 Id: nidrs-to-fhir

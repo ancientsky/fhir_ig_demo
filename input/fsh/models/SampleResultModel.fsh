@@ -70,7 +70,7 @@ Title: "NIDRS JSON → FHIR"
 Description: "PushSampleResult JSON 欄位與本 IG FHIR R4 Profile 元素之對應；格式為「Profile Id: FHIR 元素路徑」，註解為轉換說明。"
 Source: SampleResultModel
 Target: "http://hl7.org/fhir/R4"
-* -> "Bundle-nidrs-push-sample-result: Bundle；MessageHeader-nidrs-push-sample-result: MessageHeader；DiagnosticReport-nidrs-sample-result: DiagnosticReport" "原為 Web Service PushSampleResult(string jsonString)，回傳 Boolean；FHIR 以訊息 Bundle 傳送，MessageHeader.eventCoding = CDCMessageEvent#PushSampleResult"
+* -> "Bundle-nidrs-push-sample-result: Bundle；MessageHeader-nidrs-push-sample-result: MessageHeader；DiagnosticReport-nidrs-sample-result: DiagnosticReport" "原為 Web Service PushSampleResult(string jsonString)，回傳 Boolean；FHIR 以訊息 Bundle 傳送，MessageHeader.eventCoding = CDCMessageEvent#PushSampleResult；SampleResult 不含個案證號，DiagnosticReport.subject(必填)由疾管署依通報單號帶入個案證號並以 identifier 參照"
 * ReportId -> "DiagnosticReport-nidrs-sample-result: DiagnosticReport.extension[report].valueReference.identifier.value" "workflow-reasonReference 擴充以 identifier(system = nidrs-report-id)參照通報單"
 * SampleId -> "DiagnosticReport-nidrs-sample-result: DiagnosticReport.identifier[barcode].value；DiagnosticReport-nidrs-sample-result: DiagnosticReport.basedOn.identifier.value" "system = https://lims.cdc.gov.tw/；basedOn 以同一送驗單編號參照 ServiceRequest"
 * DiseaseId -> "DiagnosticReport-nidrs-sample-result: DiagnosticReport.code.coding[testDisease].code" "system = CodeSystem cdc-test-disease"

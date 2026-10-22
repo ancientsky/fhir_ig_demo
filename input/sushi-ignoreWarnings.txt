@@ -1,0 +1,2 @@
+# SUSHI 忽略之警告：邏輯模型保留原規格 JSON 欄位名稱(含底線)
+/^Inadvisable path .* Element names should be simple alphanumerics\./

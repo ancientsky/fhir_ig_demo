@@ -124,7 +124,7 @@ Description: "診斷醫師(DIAGNOSTICIAN)範例：臺大醫院感染科主治醫
 * name.text = "王志明"
 
 Instance: role-ntuh-reporter
-InstanceOf: PractitionerRoleNIDRS
+InstanceOf: PractitionerRoleNIDRSReporter
 Usage: #example
 Title: "通報者角色-林怡君(臺大醫院)"
 Description: "通報單登錄者林怡君所屬通報單位(臺大醫院)及通報者聯絡電話(HOSPITAL_CONTACT)；亦作為送驗單之送驗人員與送驗單位。"
@@ -156,7 +156,7 @@ Description: "登革熱大量通報範例之診斷醫師：成大醫院急診部
 * name.text = "黃俊傑"
 
 Instance: role-ncku-reporter
-InstanceOf: PractitionerRoleNIDRS
+InstanceOf: PractitionerRoleNIDRSReporter
 Usage: #example
 Title: "通報者角色-陳淑芬(成大醫院)"
 Description: "登革熱大量通報範例之通報者角色：陳淑芬所屬通報單位(成大醫院)及通報者聯絡電話。"

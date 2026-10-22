@@ -36,7 +36,7 @@ Description: "NIDRS 表9 傳染病通報單新增作業結構表-回應資料結
 * REPORT_RESULT.ERROR_LIST.ERROR_MESSAGE 1..1 string "錯誤訊息" "錯誤訊息。原規格資料型態：String/2000。"
 * REPORT_RESULT.ERROR_LIST.ERROR_MESSAGE ^maxLength = 2000
 * REPORT_RESULT.ERROR_LIST.ERROR_MESSAGE ^example.label = "範例"
-* REPORT_RESULT.ERROR_LIST.ERROR_MESSAGE ^example.valueString = "個案資料-身分證統一編號必填"
+* REPORT_RESULT.ERROR_LIST.ERROR_MESSAGE ^example.valueString = "通報單-個案資料：患者「身份證字號/護照號碼」必填寫"
 
 Mapping: HISMsg01ModelToFHIR
 Id: nidrs-to-fhir

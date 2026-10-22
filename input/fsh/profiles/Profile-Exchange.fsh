@@ -222,7 +222,7 @@ Description: "此送驗單綜合檢驗結果-DiagnosticReport NIDRS Sample Resul
 * code.coding[testDisease] from CDCTestDisease (required)
 * code.coding[testDisease].system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-test-disease"
 * code.coding[testDisease] ^short = "送驗疾病代碼(DiseaseId)；display 填送驗疾病中文名稱(DiseaseName)"
-* subject ^short = "通報個案；疾管署以個案證號(identifier)參照"
+* subject ^short = "通報個案；原規格 SampleResult 無個案證號，疾管署依通報單號(ReportId)查得之個案證號以 identifier 參照"
 * subject.identifier MS
 * issued 1..1 MS
 * issued ^short = "檢驗結果時間(ResultInformDay)"

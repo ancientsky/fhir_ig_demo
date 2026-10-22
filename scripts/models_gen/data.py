@@ -150,10 +150,10 @@ REPORT_COMMON = [
       note=mv("general-ward", "、Encounter.class = v3-ActCode#IMP；入住一般病房日(HOSPITALIZED_DAY)必填(nidrs-enc-1)")),
     F("HOSPITALIZED_ICU", "0..1", "Bool", "病患動向_入住加護病房", "病患動向_入住加護病房 (true-是, false-否)；勾選是時，首次入住加護病房日必填、轉出加護病房日選填。",
       maps=[(ENC, "Encounter.extension[patientMovement].valueCodeableConcept"), (ENC, "Encounter.location[icu]")],
-      note=mv("icu", "、Encounter.class = v3-ActCode#IMP，並建立 location[icu](nidrs-enc-2)")),
+      note=mv("icu", "、Encounter.class = v3-ActCode#IMP，並建立 `location[icu]`(見 nidrs-enc-2)")),
     F("HOSPITALIZED_ISOLATION_ROOM", "0..1", "Bool", "病患動向_入住隔離病房", "病患動向_入住隔離病房 (true-是, false-否)；勾選是時，首次入住隔離病房日必填、轉出隔離病房日選填。",
       maps=[(ENC, "Encounter.extension[patientMovement].valueCodeableConcept"), (ENC, "Encounter.location[isolationRoom]")],
-      note=mv("isolation-room", "、Encounter.class = v3-ActCode#IMP，並建立 location[isolationRoom](nidrs-enc-2)")),
+      note=mv("isolation-room", "、Encounter.class = v3-ActCode#IMP，並建立 `location[isolationRoom]`(見 nidrs-enc-2)")),
     F("HOSPITALIZED_DISCHARGED", "0..1", "Bool", "病患動向_出院", "病患動向_出院 (true-是, false-否)；勾選是時，出院日必填。",
       maps=[(ENC, "Encounter.extension[patientMovement].valueCodeableConcept"), (ENC, "Encounter.status")],
       note=mv("discharged", "、Encounter.status = finished；出院日(DISCHARGE)必填(nidrs-enc-3)")),
@@ -255,7 +255,7 @@ REPORT_COMMON = [
 REPORT_CONTACT = [
     F("CONTACT_TYPE", "1..1", "Code", "聯絡資料類型", "0:連絡電話/1:手機；連絡電話、手機皆必填。", ex="1",
       maps=[(PAT, "Patient.telecom[phone|mobile]")],
-      note="0(連絡電話)→telecom[phone](system = phone、use = home)；1(手機)→telecom[mobile](system = phone、use = mobile)；ConceptMap cdc-contact-type-to-contactpoint"),
+      note="0(連絡電話)→`telecom[phone]`（system = phone、use = home）；1(手機)→`telecom[mobile]`（system = phone、use = mobile）；ConceptMap cdc-contact-type-to-contactpoint"),
     F("CONTACT_VALUE", "1..1", "String/100", "聯絡資料內容", "聯絡電話或手機號碼。", ex="0912345678",
       maps=[(PAT, "Patient.telecom[phone|mobile].value")], note="直接對應；若無請填「無」"),
 ]

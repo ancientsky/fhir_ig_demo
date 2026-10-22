@@ -15,6 +15,7 @@ Description: "法傳送驗單檢體範例：檢體類別 0 血清(符合送驗�
 * extension[autopsy].valueBoolean = false
 * status = #available
 * type = CDCSpecimenType#0 "血清"
+* type.coding[1] = $SCT#119364003 "Serum specimen"
 * subject = Reference(patient-dengue) "張雅婷"
 * collection.collectedDateTime = "2026-01-14T10:20:00+08:00"
 * collection.collector = Reference(role-ntuh-reporter) "林怡君"

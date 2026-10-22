@@ -10,7 +10,7 @@ InstanceOf: PatientNIDRSDengueBulk
 Usage: #inline
 Title: "登革熱大量通報個案-許文彬"
 Description: "登革熱大量通報個案範例(1)：本國籍男性，僅填寫手機，未填寫連絡電話與是否死亡。"
-* insert ExIdCardNumber(D220876542)
+* insert ExIdCardNumber(D120876542)
 * extension[nationality].extension[code].valueCodeableConcept = CDCCountry#158 "中華民國"
 * extension[citizen].valueCoding = CDCCitizen#0 "本國籍"
 * name[usual].use = #usual
@@ -74,14 +74,18 @@ Description: "登革熱大量通報之通報疾病範例(1)：未填寫有無症
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis
 * code.coding[cdcDisease] = CDCDisease#061 "登革熱"
+* code.coding[sct] = $SCT#38362002 "Dengue"
 * code.text = "登革熱"
 * subject = Reference(patient-dengue-bulk-1) "許文彬"
 * onsetDateTime = "2026-08-17"
 * recordedDate = "2026-08-19"
 * asserter = Reference(prac-ncku-doctor) "黃俊傑"
 * evidence[0].code[0] = CDCSymptom#133 "發燒"
+* evidence[0].code[0].coding[1] = $SCT#386661006 "Fever"
 * evidence[0].code[1] = CDCSymptom#45 "肌肉痛"
+* evidence[0].code[1].coding[1] = $SCT#68962001 "Muscle pain"
 * evidence[0].code[2] = CDCSymptom#189 "關節痛"
+* evidence[0].code[2].coding[1] = $SCT#57676002 "Pain of joint"
 
 Instance: condition-dengue-bulk-2
 InstanceOf: ConditionNIDRSDengueBulk
@@ -93,6 +97,7 @@ Description: "登革熱大量通報之通報疾病範例(2)：未填寫有無症
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis
 * code.coding[cdcDisease] = CDCDisease#061 "登革熱"
+* code.coding[sct] = $SCT#38362002 "Dengue"
 * code.text = "登革熱"
 * subject = Reference(patient-dengue-bulk-2) "阮氏蘭"
 * onsetDateTime = "2026-08-18"

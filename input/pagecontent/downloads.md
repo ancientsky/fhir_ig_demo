@@ -40,6 +40,7 @@ java -jar validator_cli.jar my-bundle.json -version 4.0.1 \
 pip install openpyxl python-docx
 python3 scripts/gen_terminology.py      # 附錄四 xlsx → input/fsh/generated/*.fsh
 python3 scripts/gen_questionnaires.py   # 附錄二 docx → input/fsh/generated/questionnaires/*.fsh 及 supplement-fields.md
+python3 scripts/gen_standard_maps.py   # SNOMED CT / LOINC 概念對應
 sushi build .                           # FSH → FHIR JSON
 ./_genonce.sh                           # IG Publisher 產生網站
 ```

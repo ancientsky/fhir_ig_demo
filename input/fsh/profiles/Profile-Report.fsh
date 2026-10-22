@@ -12,6 +12,8 @@ RuleSet: CompositionReportRules(patientProfile, conditionProfile, occupationMin,
 * subject ^short = "通報個案"
 * date MS
 * date ^short = "報告日期(REPORTED_DAY)；僅可為建檔日起算往前31天內(含)之日期"
+* date obeys nidrs-date-1
+* obeys nidrs-cmp-1 and nidrs-cmp-2
 * author 1..1 MS
 * author only Reference(PractitionerRoleNIDRSReporter)
 * author ^short = "通報單登錄者(REPORTER_NAME)、通報單位(HOSPITAL)與通報者聯絡電話(HOSPITAL_CONTACT)"
@@ -124,6 +126,16 @@ Description: "此傳染病個案通報單(登革熱大量通報)-Composition NID
 // 通報疾病(Condition)
 // ============================================================
 
+Invariant: nidrs-cmp-1
+Description: "報告日期(REPORTED_DAY)不得晚於衛生局收到日(PHB_RECEIVED_DAY)。"
+Severity: #error
+Expression: "extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-phb-received-date').value.exists() and date.exists() implies date.toString().substring(0, 10) <= extension('https://ancientsky.github.io/fhir_ig_demo/StructureDefinition/nidrs-phb-received-date').value.toString()"
+
+Invariant: nidrs-cmp-2
+Description: "報告日期(REPORTED_DAY)僅可為通報單建檔日起算往前31天內(含)之日期(以驗證當日估算，正式檢核以 NIDRS 建檔日為準)。"
+Severity: #warning
+Expression: "date.exists() implies date.toString().substring(0, 10) >= (today() - 31 days).toString()"
+
 RuleSet: ConditionNIDRSRules(patientProfile)
 * ^version = "0.1.0"
 * identifier MS
@@ -143,6 +155,7 @@ RuleSet: ConditionNIDRSRules(patientProfile)
 * code 1..1 MS
 * code.coding contains cdcDisease 1..1 MS
 * code.coding[cdcDisease] ^short = "通報疾病代碼(DISEASE_ID)"
+* code ^short = "通報疾病；除 CDC 疾病代碼外，建議同時以 TW Core sct slice 填寫 SNOMED CT 編碼(ConceptMap cdc-disease-to-snomed)"
 * code.coding[cdcDisease] from CDCDisease (required)
 * code.coding[cdcDisease].system 1..1
 * code.coding[cdcDisease].system = "https://ancientsky.github.io/fhir_ig_demo/CodeSystem/cdc-disease"
@@ -165,8 +178,16 @@ RuleSet: ConditionNIDRSRules(patientProfile)
 * evidence ^short = "主要症狀(DISEASE_SYMPTOM)；若有症狀請填寫"
 * evidence.code 1..* MS
 * evidence.code from CDCSymptom (extensible)
-* evidence.code ^short = "症狀代碼(請參考 ConceptMap 疾病與主要症狀關聯)；其他(999)時請於 text 填寫其他症狀(DISEASE_SYMPTOM_OTHER，100字)"
+* evidence.code ^short = "症狀代碼(請參考 ConceptMap 疾病與主要症狀關聯)；其他(999)時請於 text 填寫其他症狀(DISEASE_SYMPTOM_OTHER，100字)。建議同時填寫 SNOMED CT 編碼(ConceptMap cdc-symptom-to-snomed)"
+* evidence.code obeys nidrs-con-6
+* onsetDateTime obeys nidrs-date-1
+* recordedDate obeys nidrs-date-1
 * obeys nidrs-con-1 and nidrs-con-2 and nidrs-con-3 and nidrs-con-4
+
+Invariant: nidrs-con-6
+Description: "主要症狀填寫「其他」(999)時，其他主要症狀(DISEASE_SYMPTOM_OTHER，填於 code.text)必填。"
+Severity: #error
+Expression: "coding.where(code = '999').exists() implies text.exists()"
 
 Invariant: nidrs-con-1
 Description: "無發病日(NO_SICK_DAY)為 true 時，不可填寫發病日期(SICK_DAY)。"
@@ -234,6 +255,12 @@ Description: "此病患動向-Encounter NIDRS Profile說明本IG如何進一步�
 * subject only Reference(PatientNIDRS or PatientNIDRSDengueBulk)
 * period MS
 * period.start ^short = "入住一般病房日(HOSPITALIZED_DAY)"
+* period obeys nidrs-period-1
+* period.start obeys nidrs-date-1
+* period.end obeys nidrs-date-1
+* location.period obeys nidrs-period-1
+* location.period.start obeys nidrs-date-1
+* location.period.end obeys nidrs-date-1
 * period.end ^short = "出院日(DISCHARGE)或轉院日期(TRANSFER_DAY)"
 * serviceProvider MS
 * serviceProvider only Reference(OrganizationNIDRSHospital)
@@ -304,6 +331,12 @@ Description: "此職業-Observation NIDRS Occupation Profile說明本IG如何定
 * value[x] only CodeableConcept
 * valueCodeableConcept from CDCOccupation (required)
 * valueCodeableConcept ^short = "職業代碼(OCCUPATION)；職業選擇不詳時，請於 text 說明(OCCUPATION_OTHER，100字)"
+* valueCodeableConcept obeys nidrs-occ-1
+
+Invariant: nidrs-occ-1
+Description: "職業選擇「不詳」(63)時，詳細職業身分說明(OCCUPATION_OTHER，填於 text)必填。"
+Severity: #error
+Expression: "coding.where(code = '63').exists() implies text.exists()"
 
 Profile: ObservationNIDRSEpiFlag
 Parent: Observation
@@ -326,6 +359,10 @@ Description: "此旅遊史-Observation NIDRS Travel Profile說明本IG如何定�
 * value[x] only CodeableConcept
 * valueCodeableConcept from NIDRSTravelArea (required)
 * valueCodeableConcept ^short = "地區(TRAVEL_AREA)：國內旅遊填縣市代碼；國外填國家代碼，選擇其他時請於 text 填寫其他國家(TRAVEL_AREA_OTHER)"
+* valueCodeableConcept obeys nidrs-trv-2
+* effectivePeriod obeys nidrs-period-1
+* effectivePeriod.start obeys nidrs-date-1
+* effectivePeriod.end obeys nidrs-date-1
 * effective[x] 1..1 MS
 * effective[x] only Period
 * effectivePeriod.start 1..1 MS
@@ -349,6 +386,11 @@ Description: "此旅遊史-Observation NIDRS Travel Profile說明本IG如何定�
 * component[subArea].value[x] only string
 * obeys nidrs-trv-1
 
+Invariant: nidrs-trv-2
+Description: "國外旅遊史/國外居住史國家代碼選擇「其他」(OTH)時，其他國家(TRAVEL_AREA_OTHER，填於 text)必填。"
+Severity: #error
+Expression: "coding.where(code = 'OTH').exists() implies text.exists()"
+
 Invariant: nidrs-trv-1
 Description: "旅遊類型為國內旅遊(0)時，地區須為縣市代碼；國外旅遊史(1)/國外居住史(2)時，地區須為國家代碼。"
 Severity: #error
@@ -365,6 +407,12 @@ Description: "此接觸動物史-Observation NIDRS Animal Profile說明本IG如�
 * value[x] only CodeableConcept
 * valueCodeableConcept from CDCAnimal (required)
 * valueCodeableConcept ^short = "接觸動物種類(ANIMAL_ID)；代碼為其他(90)時，請於 text 填寫其他接觸動物(ANIMAL_OTHER，120字)"
+* valueCodeableConcept obeys nidrs-ani-1
+
+Invariant: nidrs-ani-1
+Description: "接觸動物種類代碼為「其他」(90)時，其他接觸動物(ANIMAL_OTHER，填於 text)必填。"
+Severity: #error
+Expression: "coding.where(code = '90').exists() implies text.exists()"
 
 Profile: ObservationNIDRSDenseInstitution
 Parent: Observation
@@ -385,6 +433,7 @@ Title: "死亡原因-Observation NIDRS Cause of Death"
 Description: "此死亡原因-Observation NIDRS Cause of Death Profile說明本IG如何定義 Observation 以呈現通報單死亡原因甲、乙、丙、丁及其他(DEATH_REASON_A~D、DEATH_REASON_OTHER)。"
 * insert ObservationNIDRSBase(exam)
 * code = CDCNIDRSObservation#DEATH_REASON
+* code ^short = "死亡原因；建議同時填寫 LOINC 69453-9 Cause of death"
 * component 1..* MS
 * component ^slicing.discriminator.type = #pattern
 * component ^slicing.discriminator.path = "code"

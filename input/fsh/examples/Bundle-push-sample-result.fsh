@@ -44,6 +44,7 @@ Description: "病原體檢驗結果(SamplePathogenResult)範例：螢光定量�
 * subject.display = "張雅婷"
 * effectiveDateTime = "2026-01-15"
 * valueCodeableConcept = CDCPathogen#061 "登革病毒"
+* valueCodeableConcept.coding[1] = $SCT#34348001 "Dengue virus"
 * interpretation[0] = $TWIDIRTestResult#2 "陽性"
 * component[subtype].code = CDCNIDRSObservation#PATHOGEN_SUBTYPE "病原體次分型"
 * component[subtype].valueCodeableConcept.text = "第二型(DENV-2)"

@@ -103,7 +103,31 @@
 | [聯絡資料類型對應](ConceptMap-cdc-contact-type-to-contactpoint.html) | 人工定義 | CONTACT_TYPE 與 ContactPoint.system/use |
 | [病患動向與就醫類別對應](ConceptMap-cdc-patient-movement-to-encounter-class.html) | 人工定義 | 病患動向與 Encounter.class |
 | [研判結果與病情確認狀態對應](ConceptMap-cdc-determine-status-to-condition-ver-status.html) | 人工定義 | 研判結果代碼與 Condition.verificationStatus |
+| [通報疾病代碼對應 SNOMED CT](ConceptMap-cdc-disease-to-snomed.html) | 人工定義(`scripts/gen_standard_maps.py`) | 53 個通報疾病對應 SNOMED CT 疾患；用於 Condition.code 之 sct slice |
+| [症狀代碼對應 SNOMED CT](ConceptMap-cdc-symptom-to-snomed.html) | 同上 | 62 個常用症狀對應 SNOMED CT 臨床發現；用於 Condition.evidence.code |
+| [送驗檢體類別對應 SNOMED CT](ConceptMap-cdc-specimen-type-to-snomed.html) | 同上 | 17 個常用檢體類別對應 SNOMED CT 檢體；用於 Specimen.type |
+| [結核病檢體類別對應 SNOMED CT](ConceptMap-cdc-tb-specimen-type-to-snomed.html) | 同上 | 結核病檢體類別對應 SNOMED CT 檢體 |
+| [病原體類別對應 SNOMED CT](ConceptMap-cdc-pathogen-to-snomed.html) | 同上 | 16 個病原體大項對應 SNOMED CT 生物體；用於病原體檢驗結果 Observation.valueCodeableConcept |
+| [病歷檔案類別對應 LOINC 文件類型](ConceptMap-cdc-file-category-to-loinc.html) | 同上 | FILE_CATEGORY 對應 LOINC 文件類型；用於 DocumentReference.type |
 {:.grid}
+
+### SNOMED CT 與 LOINC 之使用
+
+本IG以疾管署代碼為主要(必填)代碼，並建議實作者**同時**填寫對應之國際標準代碼(CodeableConcept 之多筆 coding)，以利與醫院 EMR、TW Core 及國際資料交換：
+
+| 元素 | 疾管署代碼(必填) | 建議同時填寫之國際標準代碼 |
+|---|---|---|
+| Condition.code(通報疾病) | CDCDisease | SNOMED CT 疾患(TW Core `sct` slice)，見 ConceptMap cdc-disease-to-snomed |
+| Condition.evidence.code(主要症狀) | CDCSymptom | SNOMED CT 臨床發現，見 ConceptMap cdc-symptom-to-snomed |
+| Specimen.type(檢體類別) | CDCSpecimenType / CDCTBSpecimenType | SNOMED CT 檢體，見 ConceptMap cdc-specimen-type-to-snomed |
+| 病原體檢驗結果 Observation.valueCodeableConcept | CDCPathogen | SNOMED CT 生物體，見 ConceptMap cdc-pathogen-to-snomed |
+| DocumentReference.type(病歷檔案) | CDCFileCategory(category) | LOINC 文件類型，見 ConceptMap cdc-file-category-to-loinc |
+| 死亡原因 Observation.code | CDCNIDRSObservation#DEATH_REASON | LOINC `69453-9` Cause of death |
+| ServiceRequest.code(送驗單) | — | SNOMED CT `108252007` Laboratory procedure(固定值) |
+| Composition.type / section.code、職業、旅遊史 | — | LOINC `55751-2`、`11450-4`、`46240-8`、`29762-2`、`85658-3`、`8691-8`(固定值) |
+{:.grid}
+
+對應表僅收錄語意明確者；NIDRS 代碼較 SNOMED CT 概念狹義者(例如「流感併發重症」→ Influenza、「發燒(38℃以上)」→ Fever)標示為 `wider`。未收錄之代碼請僅填疾管署代碼。
 
 ### 引用之外部術語
 
@@ -111,8 +135,8 @@
 |---|---|
 | TWIDIR [CDC-LIMS系統-檢驗結果](https://twidir.cdc.gov.tw/twidir/CodeSystem-twcdc-testresult-values.html)(`https://twidir.cdc.gov.tw/twidir/CodeSystem/twcdc-testresult-values`) | 綜合檢驗結果(ResultId)、血清學/病原體檢驗結果代碼；本IG僅以 canonical 參照，未將 TWIDIR 列為套件相依 |
 | TW Core [臺灣醫事機構代碼](https://twcore.mohw.gov.tw/ig/twcore/1.0.0/CodeSystem-organization-identifier-tw.html)(`organization-identifier-tw`) | 醫事機構代碼(HOSPITAL、SAMPLING_HOSPITAL、TRANSFER_HOSPITAL)之 identifier.system |
-| [LOINC](https://loinc.org/) | Composition.type `55751-2` Public health Case report；區段代碼 `11450-4`、`46240-8`、`29762-2`；職業 `85658-3`；旅遊史 `8691-8` |
-| [SNOMED CT](http://snomed.info/sct) | 送驗單 ServiceRequest.code `108252007` Laboratory procedure |
+| [LOINC](https://loinc.org/) | 病歷檔案類型(DocumentReference.type)、死亡原因 `69453-9`；Composition.type `55751-2` Public health Case report；區段代碼 `11450-4`、`46240-8`、`29762-2`；職業 `85658-3`；旅遊史 `8691-8` |
+| [SNOMED CT](http://snomed.info/sct) | 送驗單 ServiceRequest.code `108252007` Laboratory procedure；疾病、症狀、檢體、病原體之對應(建議同時填寫) |
 | HL7 Terminology(THO) | identifier type(v2-0203：PRN、PPN、HC)、v3-RoleCode `NMTH`(生母)、condition-clinical、condition-ver-status、condition-category、observation-category、v2-0074 `LAB`、discharge-disposition |
 | [MIME types](https://www.iana.org/assignments/media-types/media-types.xhtml)(`urn:ietf:bcp:13`) | 病歷檔案類型 |
 | ISO 3166 | 國家代碼對應目標；外國護照號碼 identifier.system(`http://hl7.org/fhir/sid/passport-{alpha-3}`) |

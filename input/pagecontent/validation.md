@@ -25,6 +25,28 @@
 | `nidrs-msg-1` | [MessageHeader NIDRS Response](StructureDefinition-MessageHeader-nidrs-response.html) | 處理失敗(response.code 非 ok)時，須提供錯誤清單(response.details)。 | STATUS=FAILURE、ERROR_LIST |
 | `nidrs-bun-1` | [Bundle NIDRS Report Create](StructureDefinition-Bundle-nidrs-report-create.html)、[Bundle NIDRS Report Update](StructureDefinition-Bundle-nidrs-report-update.html) | 每一筆通報單(Composition)皆須填寫旅遊史有無(HAS_TRAVEL_HISTORY，1..1)。 | HAS_TRAVEL_HISTORY |
 | `nidrs-bun-2` | 同上 | MessageHeader 須為 Bundle 之第一筆 entry。 | — |
+| `nidrs-date-1` | 各 Profile 之日期元素(出生日期、死亡日期、發病日期、診斷日期、報告日期、衛生局收到日、病患動向日期、旅遊日期、採檢日、建檔日) | 日期若有值，不得為未來日期。 | 共同欄位檢核條件 |
+| `nidrs-period-1` | [Encounter NIDRS](StructureDefinition-Encounter-nidrs.html)(period、location.period)、[Observation NIDRS Travel](StructureDefinition-Observation-nidrs-travel.html) | 期間之開始時間不得晚於結束時間(首次入住≦轉出加護病房/隔離病房日、入住一般病房日≦出院日、旅遊開始時間≦結束時間)。 | 共同欄位檢核條件(旅遊日期、病患動向檢核) |
+| `nidrs-pat-5` | [Patient NIDRS](StructureDefinition-Patient-nidrs.html)、[Patient NIDRS Dengue Bulk](StructureDefinition-Patient-nidrs-dengue-bulk.html)、[Patient NIDRS TB Sample](StructureDefinition-Patient-nidrs-tb-sample.html) | 身分證統一編號格式須為 1 碼英文字母 + 1 或 2 + 8 碼數字。 | IDNO |
+| `nidrs-pat-6` | 同上 | 居留證統一證號格式須為「1碼英文+9碼數字」或「2碼英文+8碼數字」。 | IDNO |
+| `nidrs-pat-7`(warning) | 同上 | 性別宜與身分證統一編號第二碼一致(1=男性、2=女性)。 | GENDER、IDNO |
+| `nidrs-pat-8` | 同上 | NIDRS系統自動編碼證號僅可填 AA、BB、CC 或系統自動編碼流水證號(例：AA11300001)。 | IDNO |
+| `nidrs-pat-9` | [Patient NIDRS](StructureDefinition-Patient-nidrs.html)、[Patient NIDRS Dengue Bulk](StructureDefinition-Patient-nidrs-dengue-bulk.html) | 本國籍(CITIZEN=0)國家僅可填 158；非本國籍(CITIZEN=1)不可填 158。 | CITIZEN、NATIONALITY |
+| `nidrs-pat-10` | [Patient NIDRS](StructureDefinition-Patient-nidrs.html)、[Patient NIDRS Dengue Bulk](StructureDefinition-Patient-nidrs-dengue-bulk.html) | 國家代碼為「其他」(OTH)時，其他國家(NATIONALITY_OTHER)必填。 | NATIONALITY_OTHER |
+| `nidrs-pat-11` | [Patient NIDRS](StructureDefinition-Patient-nidrs.html)、[Patient NIDRS Dengue Bulk](StructureDefinition-Patient-nidrs-dengue-bulk.html) | 非本國籍居民身分為「其他」(9)時，非本國籍居民身分說明(RESIDENCE_TYPE_OTHER)必填。 | RESIDENCE_TYPE_OTHER |
+| `nidrs-cmp-1` | [Composition NIDRS Report](StructureDefinition-Composition-nidrs-report.html) 等通報單 Profiles | 報告日期不得晚於衛生局收到日。 | 共同欄位檢核條件(通報日期檢核) |
+| `nidrs-cmp-2`(warning) | 同上 | 報告日期僅可為建檔日起算往前 31 天內(含)；FHIR 驗證以驗證當日估算，正式檢核以 NIDRS 建檔日為準(故範例日期超過 31 天時會出現此警告)。 | REPORTED_DAY |
+| `nidrs-con-6` | [Condition NIDRS](StructureDefinition-Condition-nidrs.html) 等通報疾病 Profiles | 主要症狀為「其他」(999)時，其他主要症狀(DISEASE_SYMPTOM_OTHER)必填。 | DISEASE_SYMPTOM_OTHER |
+| `nidrs-occ-1` | [Observation NIDRS Occupation](StructureDefinition-Observation-nidrs-occupation.html) | 職業為「不詳」(63)時，詳細職業身分說明(OCCUPATION_OTHER)必填。 | OCCUPATION_OTHER |
+| `nidrs-trv-2` | [Observation NIDRS Travel](StructureDefinition-Observation-nidrs-travel.html) | 國外旅遊史/國外居住史國家代碼為「其他」(OTH)時，其他國家(TRAVEL_AREA_OTHER)必填。 | TRAVEL_AREA_OTHER |
+| `nidrs-ani-1` | [Observation NIDRS Animal](StructureDefinition-Observation-nidrs-animal.html) | 接觸動物種類為「其他」(90)時，其他接觸動物(ANIMAL_OTHER)必填。 | ANIMAL_OTHER |
+| `nidrs-bun-4` | [Bundle NIDRS Report Create](StructureDefinition-Bundle-nidrs-report-create.html)、[Bundle NIDRS Report Update](StructureDefinition-Bundle-nidrs-report-update.html) | 出生日期不得晚於發病日期。 | 共同欄位檢核條件(個案日期檢核) |
+| `nidrs-bun-5` | 同上 | 發病日期不得晚於死亡日期。 | 共同欄位檢核條件(個案日期檢核) |
+| `nidrs-bun-6` | 同上 | 診斷日期不得晚於報告日期(僅檢核單一通報單之訊息)。 | 共同欄位檢核條件(通報日期檢核) |
+| `nidrs-bun-7` | 同上 | 填寫死亡原因時，個案須為死亡且填寫死亡日期。 | DEATH_REASON_A~D、DEATH_DAY |
+| `nidrs-bun-8` | [Bundle NIDRS Sample](StructureDefinition-Bundle-nidrs-sample.html) | 結核病送驗之採檢日須在送驗日之前或同日。 | SAMPLED_DAY、PHPROVIDEDATE |
+
+上表 `nidrs-date-1` 至 `nidrs-bun-8` 參考 [fhir-nidrs/nidrs](https://build.fhir.org/ig/fhir-nidrs/nidrs/) 之檢核規則並依本IG結構調整(v0.1.1 新增)。
 {:.grid}
 
 此外，FHIR 核心 Period 之限制條件 `per-1`(start 不可晚於 end)自動適用於旅遊史之開始/結束時間(`Observation.effectivePeriod`)，以及加護病房、隔離病房之首次入住日/轉出日(`Encounter.location.period`)。
@@ -94,8 +116,8 @@
 | **是否死亡**：勾選「是」時，死亡日期必填 | `nidrs-pat-2` |
 | **發病日期/無發病日/有無症狀** | `nidrs-con-1`、`nidrs-con-2`、`nidrs-con-3` |
 | **主要症狀(DISEASE_SYMPTOM)**：請參考「疾病與主要症狀關聯」；填寫非該疾病關聯之症狀代碼時，NIDRS 將自動改填為其他(999)，並將原症狀改填至 DISEASE_SYMPTOM_OTHER；主要症狀含其他(999)時須填寫其他症狀說明 | 疾病與症狀之關聯以 ConceptMap [疾病與主要症狀關聯](ConceptMap-cdc-disease-symptom.html) 提供參考；自動改填為疾管署系統行為；其他症狀說明填於 `Condition.evidence.code.text`(商業規則) |
-| **報告日期(REPORTED_DAY)**：填入值僅可為該通報單建檔日起算往前 31 天內(含)之日期 | 商業規則(建檔日由疾管署系統產生) |
-| **職業**：職業選擇不詳時，請於詳細職業身分說明(OCCUPATION_OTHER)說明 | 商業規則(說明填於 CodeableConcept.text) |
+| **報告日期(REPORTED_DAY)**：填入值僅可為該通報單建檔日起算往前 31 天內(含)之日期 | `nidrs-cmp-2`(warning，以驗證當日估算；正式檢核以疾管署建檔日為準) |
+| **職業**：職業選擇不詳時，請於詳細職業身分說明(OCCUPATION_OTHER)說明 | `nidrs-occ-1`(說明填於 CodeableConcept.text) |
 | **旅遊史**：旅遊史為「有」時需填寫旅遊史明細(TRAVEL)；國外旅遊史/國外居住史之國家代碼選擇其他時，其他國家(TRAVEL_AREA_OTHER)必填；國外居住史之開始時間為離境居住國日期、結束時間為入境我國日期 | 有旅遊史需有 Travel Observation 為跨 Resource 之商業規則；地區代碼類型以 `nidrs-trv-1` 驗證 |
 | **動物接觸史**：動物接觸史為「有」時需填寫接觸動物史(ANIMAL)；接觸動物種類為其他(90)時，其他接觸動物(ANIMAL_OTHER)必填 | 商業規則(其他動物填於 CodeableConcept.text) |
 | **不收集動物接觸史之疾病**：德國麻疹(056)、麻疹(055)、急性病毒性D型肝炎(070d)、腸病毒感染併發重症(0749)不收集動物接觸史題組，若傳送將不檢核且不呈現於網頁 | 疾管署系統行為；通報上述疾病時，傳送端**不應(SHOULD NOT)**傳送 HAS_ANIMAL_HISTORY 及接觸動物史 Observation |

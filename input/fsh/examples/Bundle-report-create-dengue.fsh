@@ -57,16 +57,21 @@ Description: "通報疾病範例：登革熱(061)，發病日 2026-01-10、診�
 * verificationStatus = $condition-ver-status#provisional
 * category = $condition-category#encounter-diagnosis
 * code.coding[cdcDisease] = CDCDisease#061 "登革熱"
+* code.coding[sct] = $SCT#38362002 "Dengue"
 * code.text = "登革熱"
 * subject = Reference(patient-dengue) "張雅婷"
 * onsetDateTime = "2026-01-10"
 * recordedDate = "2026-01-14"
 * asserter = Reference(prac-ntuh-doctor) "王志明"
 * evidence[0].code[0] = CDCSymptom#133 "發燒"
+* evidence[0].code[0].coding[1] = $SCT#386661006 "Fever"
 * evidence[0].code[1] = CDCSymptom#181 "頭痛"
+* evidence[0].code[1].coding[1] = $SCT#25064002 "Headache"
 * evidence[0].code[2] = CDCSymptom#77 "後眼窩痛"
 * evidence[0].code[3] = CDCSymptom#45 "肌肉痛"
+* evidence[0].code[3].coding[1] = $SCT#68962001 "Muscle pain"
 * evidence[0].code[4] = CDCSymptom#24 "皮疹/紅疹/出疹"
+* evidence[0].code[4].coding[1] = $SCT#271807003 "Eruption of skin"
 
 Instance: encounter-dengue
 InstanceOf: EncounterNIDRS

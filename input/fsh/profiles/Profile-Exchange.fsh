@@ -12,6 +12,8 @@ Description: "此通報單病歷資料-DocumentReference NIDRS Profile說明本I
 * category 1..1 MS
 * category from CDCFileCategory (required)
 * category ^short = "檔案類別(FILE_CATEGORY)：1 出院病摘、2 門診病歷、3 檢驗報告、4 醫療影像及報告、0 其他"
+* type MS
+* type ^short = "LOINC 文件類型：出院病摘 18842-5、門診病歷 34108-1、檢驗報告 11502-2、醫療影像及報告 18748-4(ConceptMap cdc-file-category-to-loinc)；其他類別可不填"
 * subject MS
 * subject ^short = "通報個案；原規格未傳送個案資料，請以個案證號(identifier)參照"
 * custodian 1..1 MS
@@ -163,7 +165,8 @@ RuleSet: SpecimenNIDRSRules(typeValueSet, patientProfile)
 * subject only Reference({patientProfile})
 * type 1..1 MS
 * type from {typeValueSet} (required)
-* type ^short = "檢體類別(SAMPLE_TYPE)；其他時請於 text 填寫其他檢體備註說明(SAMPLE_TYPE_OTHER，120字)"
+* type ^short = "檢體類別(SAMPLE_TYPE)；其他時請於 text 填寫其他檢體備註說明(SAMPLE_TYPE_OTHER，120字)。建議同時填寫 SNOMED CT 檢體編碼(ConceptMap cdc-specimen-type-to-snomed)"
+* collection.collectedDateTime obeys nidrs-date-1
 * collection 1..1 MS
 * collection.collected[x] 1..1 MS
 * collection.collected[x] only dateTime
@@ -278,7 +281,7 @@ Description: "此病原體檢驗結果-Observation NIDRS Pathogen Result Profile
 * interpretation 1..1
 * value[x] only CodeableConcept
 * valueCodeableConcept from CDCPathogen (required)
-* valueCodeableConcept ^short = "病原體細類代碼(DetailId)，或僅有大類時填病原體大類代碼(MasterId)"
+* valueCodeableConcept ^short = "病原體細類代碼(DetailId)，或僅有大類時填病原體大類代碼(MasterId)；建議同時填寫 SNOMED CT 生物體編碼(ConceptMap cdc-pathogen-to-snomed)"
 * component ^slicing.discriminator.type = #pattern
 * component ^slicing.discriminator.path = "code"
 * component ^slicing.rules = #open

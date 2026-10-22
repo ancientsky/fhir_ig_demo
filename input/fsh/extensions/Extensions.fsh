@@ -53,6 +53,7 @@ Description: "衛生局收到通報單之日期。"
 * ^context[1].type = #element
 * ^context[1].expression = "Condition"
 * value[x] only date
+* value[x] obeys nidrs-date-1
 
 Extension: NIDRSCDCReceivedDate
 Id: nidrs-cdc-received-date
@@ -62,6 +63,7 @@ Description: "疾管署傳染病通報系統建檔日(研判結果主動通知 R
 * ^context[0].type = #element
 * ^context[0].expression = "Condition"
 * value[x] only date
+* value[x] obeys nidrs-date-1
 
 Extension: NIDRSReportNote
 Id: nidrs-report-note

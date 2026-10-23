@@ -30,7 +30,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+          check-latest: true
 
       - name: Install SUSHI
         run: npm install -g fsh-sushi
@@ -39,9 +40,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          check-latest: true
 
       - name: Regenerate terminology and questionnaires
         run: |
+          python -m pip install --upgrade "pip>=26.2.2"
           pip install openpyxl python-docx
           python3 scripts/gen_terminology.py
           python3 scripts/gen_questionnaires.py
